@@ -3,6 +3,11 @@ using System.Data.Entity;
 
 namespace GadgetsOnline.Models
 {
+    // PostgreSQL Compatibility Note:
+    // CreateDatabaseIfNotExists strategy is suitable for production.
+    // For development, consider using DropCreateDatabaseAlways<GadgetsOnlineEntities>
+    // or a custom initializer to reset the database on each run.
+    // The seed data uses C# property names; EF6 maps them to PostgreSQL columns via [Column] attributes.
     public class GadgetsOnlineInitializer : CreateDatabaseIfNotExists<GadgetsOnlineEntities>
     {
         protected override void Seed(GadgetsOnlineEntities context)
