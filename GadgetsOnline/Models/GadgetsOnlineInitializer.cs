@@ -38,6 +38,12 @@ namespace GadgetsOnline.Models
             products.ForEach(p => context.Products.Add(p));
 
             context.SaveChanges();
+
+            // Reset PostgreSQL sequences after seeding with explicit IDs
+            context.Database.ExecuteSqlCommand(
+                "SELECT setval(pg_get_serial_sequence('\"gadgetsonline_dbo\".\"categories\"', 'categoryid'), COALESCE(MAX(\"categoryid\"), 1)) FROM \"gadgetsonline_dbo\".\"categories\";");
+            context.Database.ExecuteSqlCommand(
+                "SELECT setval(pg_get_serial_sequence('\"gadgetsonline_dbo\".\"products\"', 'productid'), COALESCE(MAX(\"productid\"), 1)) FROM \"gadgetsonline_dbo\".\"products\";");
         }
     }
 }
