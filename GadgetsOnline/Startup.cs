@@ -36,7 +36,7 @@ namespace GadgetsOnline
             services.AddScoped<GadgetsOnlineEntities>(provider =>
                 new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))));
 
-            Database.SetInitializer(new GadgetsOnlineInitializer());
+
 
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IShoppingCart, ShoppingCart>();
@@ -51,7 +51,7 @@ namespace GadgetsOnline
             using (var context = new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))))
             {
                 // This will trigger the initializer if needed
-                context.Database.Initialize(force: false);
+                context.Database.EnsureCreated();
             }
 
             if (env.IsDevelopment())
@@ -90,4 +90,3 @@ namespace GadgetsOnline
     }
 
 }
-
