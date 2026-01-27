@@ -1,24 +1,29 @@
 using GadgetsOnline.Models;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace GadgetsOnline.Models
 {
     public class GadgetsOnlineEntities : DbContext
     {
-        // Default constructor using connection string name from config
-        public GadgetsOnlineEntities() : base("name=GadgetsOnlineEntities")
+        // Default constructor for EF Core
+        public GadgetsOnlineEntities()
         {
-            // Enable lazy loading by default (alternative to AutoInclude)
-            this.Configuration.LazyLoadingEnabled = true;
-            this.Configuration.ProxyCreationEnabled = true;
         }
 
-        // Constructor with explicit connection string
-        public GadgetsOnlineEntities(string dbConn) : base(dbConn)
+        // Constructor for EF Core with options
+        public GadgetsOnlineEntities(DbContextOptions<GadgetsOnlineEntities> options) : base(options)
         {
-            this.Configuration.LazyLoadingEnabled = true;
-            this.Configuration.ProxyCreationEnabled = true;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Default connection string from configuration
+                optionsBuilder.UseNpgsql("name=GadgetsOnlineEntities")
+                    .UseLazyLoadingProxies();
+            }
         }
 
         public DbSet<Product> Products { get; set; }
@@ -27,32 +32,77 @@ namespace GadgetsOnline.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure table and column mappings for PostgreSQL
+            modelBuilder.Entity<Product>().ToTable("products", "gadgetsonline_dbo");
+            modelBuilder.Entity<Product>().Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<Product>().Property(e => e.CategoryId).HasColumnName("categoryid");
+            modelBuilder.Entity<Product>().Property(e => e.Name).HasColumnName("name");
+            modelBuilder.Entity<Product>().Property(e => e.Price).HasColumnName("price");
+            modelBuilder.Entity<Product>().Property(e => e.ProductArtUrl).HasColumnName("productarturl");
+
+            modelBuilder.Entity<Category>().ToTable("categories", "gadgetsonline_dbo");
+            modelBuilder.Entity<Category>().Property(e => e.CategoryId).HasColumnName("categoryid");
+            modelBuilder.Entity<Category>().Property(e => e.Name).HasColumnName("name");
+            modelBuilder.Entity<Category>().Property(e => e.Description).HasColumnName("description");
+
+            modelBuilder.Entity<Cart>().ToTable("carts", "gadgetsonline_dbo");
+            modelBuilder.Entity<Cart>().Property(e => e.RecordId).HasColumnName("recordid");
+            modelBuilder.Entity<Cart>().Property(e => e.CartId).HasColumnName("cartid");
+            modelBuilder.Entity<Cart>().Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<Cart>().Property(e => e.Count).HasColumnName("count");
+            modelBuilder.Entity<Cart>().Property(e => e.DateCreated).HasColumnName("datecreated");
+
+            modelBuilder.Entity<Order>().ToTable("orders", "gadgetsonline_dbo");
+            modelBuilder.Entity<Order>().Property(e => e.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<Order>().Property(e => e.OrderDate).HasColumnName("orderdate");
+            modelBuilder.Entity<Order>().Property(e => e.Username).HasColumnName("username");
+            modelBuilder.Entity<Order>().Property(e => e.FirstName).HasColumnName("firstname");
+            modelBuilder.Entity<Order>().Property(e => e.LastName).HasColumnName("lastname");
+            modelBuilder.Entity<Order>().Property(e => e.Address).HasColumnName("address");
+            modelBuilder.Entity<Order>().Property(e => e.City).HasColumnName("city");
+            modelBuilder.Entity<Order>().Property(e => e.State).HasColumnName("state");
+            modelBuilder.Entity<Order>().Property(e => e.PostalCode).HasColumnName("postalcode");
+            modelBuilder.Entity<Order>().Property(e => e.Country).HasColumnName("country");
+            modelBuilder.Entity<Order>().Property(e => e.Phone).HasColumnName("phone");
+            modelBuilder.Entity<Order>().Property(e => e.Email).HasColumnName("email");
+            modelBuilder.Entity<Order>().Property(e => e.Total).HasColumnName("total");
+
+            modelBuilder.Entity<OrderDetail>().ToTable("orderdetails", "gadgetsonline_dbo");
+            modelBuilder.Entity<OrderDetail>().Property(e => e.OrderDetailId).HasColumnName("orderdetailid");
+            modelBuilder.Entity<OrderDetail>().Property(e => e.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<OrderDetail>().Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<OrderDetail>().Property(e => e.Quantity).HasColumnName("quantity");
+            modelBuilder.Entity<OrderDetail>().Property(e => e.UnitPrice).HasColumnName("unitprice");
+
             // Configure relationships
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
-                .WithRequired(p => p.Category)
-                .HasForeignKey(p => p.CategoryId);
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId)
+                .IsRequired();
 
             modelBuilder.Entity<Cart>()
-                .HasRequired(c => c.Product)
+                .HasOne(c => c.Product)
                 .WithMany()
-                .HasForeignKey(c => c.ProductId);
+                .HasForeignKey(c => c.ProductId)
+                .IsRequired();
 
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderDetails)
-                .WithRequired(od => od.Order)
-                .HasForeignKey(od => od.OrderId);
+                .WithOne(od => od.Order)
+                .HasForeignKey(od => od.OrderId)
+                .IsRequired();
 
             modelBuilder.Entity<OrderDetail>()
-                .HasRequired(od => od.Product)
+                .HasOne(od => od.Product)
                 .WithMany()
-                .HasForeignKey(od => od.ProductId);
+                .HasForeignKey(od => od.ProductId)
+                .IsRequired();
         }
 
     }
 
 
 }
-
