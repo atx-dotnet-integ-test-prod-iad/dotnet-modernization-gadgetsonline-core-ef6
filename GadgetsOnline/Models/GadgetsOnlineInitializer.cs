@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace GadgetsOnline.Models
 {
-    public class GadgetsOnlineInitializer : CreateDatabaseIfNotExists<GadgetsOnlineEntities>
+    public class GadgetsOnlineInitializer
     {
-        protected override void Seed(GadgetsOnlineEntities context)
+        public static void Seed(GadgetsOnlineEntities context)
         {
             // Categories
             var categories = new List<Category>
