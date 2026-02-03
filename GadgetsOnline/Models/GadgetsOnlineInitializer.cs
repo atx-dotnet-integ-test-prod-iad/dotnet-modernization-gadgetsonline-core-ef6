@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace GadgetsOnline.Models
 {
-    public class GadgetsOnlineInitializer : CreateDatabaseIfNotExists<GadgetsOnlineEntities>
+    public class GadgetsOnlineInitializer : DropCreateDatabaseAlways<GadgetsOnlineEntities>
     {
         protected override void Seed(GadgetsOnlineEntities context)
         {
