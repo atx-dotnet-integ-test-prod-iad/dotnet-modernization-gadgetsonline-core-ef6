@@ -1,9 +1,20 @@
-using GadgetsOnline.Models;
+﻿using GadgetsOnline.Models;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using Npgsql;
 
 namespace GadgetsOnline.Models
 {
+    public class GadgetsOnlineEntitiesPostgreSqlConfiguration : DbConfiguration
+    {
+        public GadgetsOnlineEntitiesPostgreSqlConfiguration()
+        {
+            SetProviderServices("Npgsql", Npgsql.NpgsqlServices.Instance);
+            SetDefaultConnectionFactory(new Npgsql.NpgsqlConnectionFactory());
+        }
+    }
+
+    [DbConfigurationType(typeof(GadgetsOnlineEntitiesPostgreSqlConfiguration))]
     public class GadgetsOnlineEntities : DbContext
     {
         // Default constructor using connection string name from config
@@ -29,6 +40,94 @@ namespace GadgetsOnline.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // Configure table and column mappings for PostgreSQL
+            modelBuilder.Entity<Product>()
+                .ToTable("products", "gadgetsonline_dbo")
+                .HasKey(e => e.ProductId);
+
+            modelBuilder.Entity<Product>()
+                .Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<Product>()
+                .Property(e => e.CategoryId).HasColumnName("categoryid");
+            modelBuilder.Entity<Product>()
+                .Property(e => e.Name).HasColumnName("name");
+            modelBuilder.Entity<Product>()
+                .Property(e => e.Price).HasColumnName("price");
+            modelBuilder.Entity<Product>()
+                .Property(e => e.ProductArtUrl).HasColumnName("productarturl");
+
+            modelBuilder.Entity<Category>()
+                .ToTable("categories", "gadgetsonline_dbo")
+                .HasKey(e => e.CategoryId);
+
+            modelBuilder.Entity<Category>()
+                .Property(e => e.CategoryId).HasColumnName("categoryid");
+            modelBuilder.Entity<Category>()
+                .Property(e => e.Name).HasColumnName("name");
+            modelBuilder.Entity<Category>()
+                .Property(e => e.Description).HasColumnName("description");
+
+            modelBuilder.Entity<Cart>()
+                .ToTable("carts", "gadgetsonline_dbo")
+                .HasKey(e => e.RecordId);
+
+            modelBuilder.Entity<Cart>()
+                .Property(e => e.RecordId).HasColumnName("recordid");
+            modelBuilder.Entity<Cart>()
+                .Property(e => e.CartId).HasColumnName("cartid");
+            modelBuilder.Entity<Cart>()
+                .Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<Cart>()
+                .Property(e => e.Count).HasColumnName("count");
+            modelBuilder.Entity<Cart>()
+                .Property(e => e.DateCreated).HasColumnName("datecreated");
+
+            modelBuilder.Entity<Order>()
+                .ToTable("orders", "gadgetsonline_dbo")
+                .HasKey(e => e.OrderId);
+
+            modelBuilder.Entity<Order>()
+                .Property(e => e.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.OrderDate).HasColumnName("orderdate");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Username).HasColumnName("username");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.FirstName).HasColumnName("firstname");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.LastName).HasColumnName("lastname");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Address).HasColumnName("address");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.City).HasColumnName("city");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.State).HasColumnName("state");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.PostalCode).HasColumnName("postalcode");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Country).HasColumnName("country");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Phone).HasColumnName("phone");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Email).HasColumnName("email");
+            modelBuilder.Entity<Order>()
+                .Property(e => e.Total).HasColumnName("total");
+
+            modelBuilder.Entity<OrderDetail>()
+                .ToTable("orderdetails", "gadgetsonline_dbo")
+                .HasKey(e => e.OrderDetailId);
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.OrderDetailId).HasColumnName("orderdetailid");
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.ProductId).HasColumnName("productid");
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.Quantity).HasColumnName("quantity");
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.UnitPrice).HasColumnName("unitprice");
+
             // Configure relationships
             modelBuilder.Entity<Category>()
                 .HasMany(c => c.Products)
@@ -55,4 +154,3 @@ namespace GadgetsOnline.Models
 
 
 }
-
