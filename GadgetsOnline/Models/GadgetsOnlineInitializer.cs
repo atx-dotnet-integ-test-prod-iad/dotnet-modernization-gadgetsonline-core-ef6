@@ -3,6 +3,15 @@ using System.Data.Entity;
 
 namespace GadgetsOnline.Models
 {
+    /// <summary>
+    /// Database initializer for GadgetsOnline EF6 context.
+    /// PostgreSQL Compatibility Notes:
+    /// - CreateDatabaseIfNotExists strategy works with PostgreSQL via Npgsql provider
+    /// - Explicit ID assignments (CategoryId, ProductId) are compatible but may require
+    ///   sequence synchronization after first run if using SERIAL/IDENTITY columns
+    /// - All seed data types (int, decimal, string) are PostgreSQL-compatible
+    /// - Post-migration: Verify sequences are synchronized with max ID values
+    /// </summary>
     public class GadgetsOnlineInitializer : CreateDatabaseIfNotExists<GadgetsOnlineEntities>
     {
         protected override void Seed(GadgetsOnlineEntities context)
