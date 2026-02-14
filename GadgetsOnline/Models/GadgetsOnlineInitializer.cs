@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 
 namespace GadgetsOnline.Models
 {
@@ -38,6 +40,21 @@ namespace GadgetsOnline.Models
             products.ForEach(p => context.Products.Add(p));
 
             context.SaveChanges();
+
+            // Reset PostgreSQL sequences to prevent ID conflicts with future inserts
+            // This ensures the next auto-generated ID will be greater than the seed data IDs
+            try
+            {
+                context.Database.ExecuteSqlCommand(
+                    "SELECT setval(pg_get_serial_sequence('\"Categories\"', '\"CategoryId\"'), (SELECT MAX(\"CategoryId\") FROM \"Categories\"));");
+                context.Database.ExecuteSqlCommand(
+                    "SELECT setval(pg_get_serial_sequence('\"Products\"', '\"ProductId\"'), (SELECT MAX(\"ProductId\") FROM \"Products\"));");
+            }
+            catch
+            {
+                // Silently ignore if sequences don't exist or if not using PostgreSQL
+                // This maintains compatibility with other database providers
+            }
         }
     }
 }

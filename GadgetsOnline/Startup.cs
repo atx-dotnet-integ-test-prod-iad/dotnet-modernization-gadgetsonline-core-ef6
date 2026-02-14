@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using GadgetsOnline.Models;
 using GadgetsOnline.Services;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data.Entity;
+using Npgsql;
 
 namespace GadgetsOnline
 {
