@@ -1,0 +1,193 @@
+{
+  "migration_metadata": {
+    "source_database": "Microsoft SQL Server 2019",
+    "target_database": "PostgreSQL 13",
+    "application_framework": ".NET 8.0 with Entity Framework 6 (EF6)",
+    "migration_date": "2026-03-06",
+    "migration_project_arn": "arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U",
+    "source_schema": "[dbo]",
+    "target_schema": "gadgetsonline_dbo"
+  },
+  "sql_statement_conversion_summary": {
+    "total_statements_processed_through_dms": 16,
+    "statements_successfully_converted_by_dms": 0,
+    "statements_requiring_manual_intervention": 16,
+    "dms_migration_project_details": {
+      "migration_project_identifier": "arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U",
+      "region": "us-east-1",
+      "schema_name": "dbo",
+      "database_name": "GadgetsOnline",
+      "server_name": "172.31.82.226"
+    },
+    "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"} - All 16 statements returned this error",
+    "dms_conversion_timestamps": {
+      "first_statement": "2026-03-06T00:39:28.141995",
+      "last_statement": "2026-03-06T00:44:17.964264"
+    },
+    "manual_conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+    "schema_mapping_details": {
+      "source_schema": "[dbo]",
+      "target_schema": "gadgetsonline_dbo",
+      "table_mappings": {
+        "[dbo].[Products]": "gadgetsonline_dbo.products",
+        "[dbo].[Categories]": "gadgetsonline_dbo.categories",
+        "[dbo].[Carts]": "gadgetsonline_dbo.carts",
+        "[dbo].[Orders]": "gadgetsonline_dbo.orders",
+        "[dbo].[OrderDetails]": "gadgetsonline_dbo.orderdetails"
+      },
+      "column_naming_convention": "All column names converted to lowercase",
+      "sql_syntax_conversions": [
+        "TOP(N) -> LIMIT N (moved to end of statement)",
+        "[dbo].[TableName] -> gadgetsonline_dbo.tablename",
+        "PascalCase columns -> lowercase columns"
+      ]
+    }
+  },
+  "sql_equivalency_validation_summary": {
+    "total_statements_validated": 16,
+    "statements_equivalent": 0,
+    "statements_non_equivalent": 0,
+    "statements_with_equivalency_error": 16,
+    "equivalency_tool_error": "'uniqueID'",
+    "validation_timestamps": {
+      "first_validation": "2026-03-06T00:46:42.859185",
+      "last_validation": "2026-03-06T00:48:03.857297"
+    },
+    "note": "All 16 statement pairs were independently validated through the SQL Equivalency MCP tool (sql-equivalency___validate_sql_equivalence). All returned ERROR status with error 'uniqueID'. This appears to be an infrastructure/service issue with the validation tool. No agent judgment was used for equivalency determination - all statuses come exclusively from the tool output."
+  },
+  "dependency_migration_summary": {
+    "packages_removed": [
+      "Microsoft.Data.SqlClient (was not present - EF6 application)",
+      "System.Data.SqlClient (was not present - EF6 application)"
+    ],
+    "packages_added": [
+      "EntityFramework6.Npgsql v6.4.3",
+      "Npgsql v5.0.18"
+    ],
+    "packages_retained": [
+      "EntityFramework v6.5.1",
+      "Microsoft.AspNetCore.Hosting.Abstractions v2.3.0",
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets v1.17.0"
+    ]
+  },
+  "code_changes_summary": {
+    "modified_files": [
+      {
+        "file": "GadgetsOnline.csproj",
+        "changes": "Replaced SQL Server package references with Npgsql equivalents (EntityFramework6.Npgsql v6.4.3, Npgsql v5.0.18)"
+      },
+      {
+        "file": "Models/GadgetsOnlineEntities.cs",
+        "changes": "Added GadgetsOnlineEntitiesPostgreSqlConfiguration with NpgsqlServices and NpgsqlConnectionFactory. Added Fluent API mappings for all 5 tables to gadgetsonline_dbo schema with lowercase column names. Added DateTime UTC fix for PostgreSQL compatibility."
+      },
+      {
+        "file": "Models/Category.cs",
+        "changes": "Added [Table(\"categories\", Schema = \"gadgetsonline_dbo\")] and [Column] annotations with lowercase column names"
+      },
+      {
+        "file": "Models/Product.cs",
+        "changes": "Added [Table(\"products\", Schema = \"gadgetsonline_dbo\")] and [Column] annotations with lowercase column names"
+      },
+      {
+        "file": "Models/Cart.cs",
+        "changes": "Added [Table(\"carts\", Schema = \"gadgetsonline_dbo\")] and [Column] annotations with lowercase column names"
+      },
+      {
+        "file": "Models/Order.cs",
+        "changes": "Added [Table(\"orders\", Schema = \"gadgetsonline_dbo\")] and [Column] annotations with lowercase column names"
+      },
+      {
+        "file": "Models/OrderDetail.cs",
+        "changes": "Added [Table(\"orderdetails\", Schema = \"gadgetsonline_dbo\")] and [Column] annotations with lowercase column names"
+      },
+      {
+        "file": "appsettings.json",
+        "changes": "Updated connection string from SQL Server format (Server=) to PostgreSQL format (Host=, Database=, Username=, Password=)"
+      },
+      {
+        "file": "app.config",
+        "changes": "Added Npgsql provider configuration, NpgsqlConnectionFactory, and NpgsqlFactory for EF6"
+      },
+      {
+        "file": "Startup.cs",
+        "changes": "Updated to use GadgetsOnlineEntities with PostgreSQL connection string and EF6 database initializer"
+      }
+    ],
+    "unmodified_source_files": [
+      "Services/Inventory.cs - EF6 LINQ queries unchanged (ORM handles SQL generation based on model mappings)",
+      "Services/ShoppingCart.cs - EF6 LINQ queries unchanged (ORM handles SQL generation based on model mappings)",
+      "Services/OrderProcessing.cs - EF6 operations unchanged (ORM handles SQL generation based on model mappings)",
+      "Models/GadgetsOnlineInitializer.cs - Seed data unchanged (EF6 handles schema mapping via Fluent API)"
+    ]
+  },
+  "configuration_changes": {
+    "connection_string": {
+      "format": "PostgreSQL",
+      "template": "Host={host};Database={database};Username={username};Password={password};",
+      "current_value": "Host=gadgetsonline-sqlserver.c6nek0euoyl0.us-east-1.rds.amazonaws.com;Database=atx-tgt-c04729758ce4430a87ec;Username=${DB_USER};Password=${DB_PASSWORD};"
+    },
+    "ef6_provider": {
+      "provider": "Npgsql",
+      "configuration_class": "GadgetsOnlineEntitiesPostgreSqlConfiguration",
+      "services": "NpgsqlServices.Instance",
+      "connection_factory": "NpgsqlConnectionFactory"
+    },
+    "schema_mapping": {
+      "source": "[dbo]",
+      "target": "gadgetsonline_dbo",
+      "naming_convention": "All table and column names lowercase"
+    }
+  },
+  "sql_server_reference_scan": {
+    "sql_connection_references": 0,
+    "sql_command_references": 0,
+    "sql_data_reader_references": 0,
+    "sql_parameter_references": 0,
+    "microsoft_data_sqlclient_references": 0,
+    "system_data_sqlclient_references": 0,
+    "note": "System.Data.SqlClient references found only in bin/obj build artifacts (transitive EF6 dependency) and in documentation text within final_migration_report.json - not in source code",
+    "status": "CLEAN - No SQL Server references remain in source code"
+  },
+  "build_verification": {
+    "build_command": "dotnet build GadgetsOnline.sln",
+    "build_result": "Build succeeded.",
+    "warnings": 0,
+    "errors": 0,
+    "output_dll": "GadgetsOnline/bin/Debug/net8.0/GadgetsOnline.dll",
+    "status": "SUCCESS"
+  },
+  "artifacts": {
+    "extracted_statements.sql": {
+      "status": "COMPLETE",
+      "statement_count": 16,
+      "description": "Complete catalog of all 16 original MS SQL Server statements extracted from EF6 LINQ queries"
+    },
+    "converted_statements.sql": {
+      "status": "COMPLETE",
+      "statement_count": 16,
+      "description": "Complete catalog of all 16 converted PostgreSQL statements with DMS output documentation and conversion timestamps"
+    },
+    "sql_equivalency_validation_report.json": {
+      "status": "COMPLETE",
+      "statement_pair_count": 16,
+      "description": "Comprehensive equivalency validation report for all 16 statement pairs with exact tool output timestamps"
+    },
+    "final_migration_report.json": {
+      "status": "COMPLETE",
+      "description": "This file - comprehensive final migration report"
+    }
+  },
+  "remaining_issues_and_notes": [
+    "DMS MCP tool failed for all 16 statements with 'Metadata model creation failed: The selected objects were not found.' - Manual conversion was applied with lowercase schema mapping (DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA).",
+    "SQL Equivalency tool returned ERROR for all 16 statement pairs with error 'uniqueID' - This is an infrastructure/service issue. These pairs should be manually reviewed to confirm equivalency.",
+    "EF6 LINQ queries in source files were NOT modified because EF6 ORM generates SQL at runtime based on model mappings. The model mappings (Fluent API + data annotations) have been updated to map to PostgreSQL schema gadgetsonline_dbo with lowercase table and column names.",
+    "Connection string uses environment variable placeholders (${DB_USER}, ${DB_PASSWORD}) for security - actual credentials must be provided at deployment time."
+  ],
+  "critical_verification_checklist": {
+    "every_sql_statement_processed_through_dms": "YES - All 16/16 statements were individually passed through the DMS MCP tool (dms-mcp___statement_conversion_tool)",
+    "every_statement_pair_validated_through_equivalency_tool": "YES - All 16/16 pairs were individually validated through the SQL Equivalency MCP tool (sql-equivalency___validate_sql_equivalence)",
+    "no_agent_judgment_used_for_equivalency": "YES - All equivalency statuses come exclusively from the SQL Equivalency tool output. All 16 returned ERROR and were marked as ERROR.",
+    "all_artifacts_complete_with_no_missing_statements": "YES - All 4 artifacts verified complete: extracted_statements.sql (16), converted_statements.sql (16), sql_equivalency_validation_report.json (16), final_migration_report.json (comprehensive)",
+    "dms_failure_documented_with_manual_conversion": "YES - All 16 DMS failures documented with original statement, DMS error, and manual conversion applying lowercase schema mapping rules"
+  }
+}

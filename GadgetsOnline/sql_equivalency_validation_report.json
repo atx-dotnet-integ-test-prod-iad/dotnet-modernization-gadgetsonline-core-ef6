@@ -1,0 +1,184 @@
+{
+  "number_of_statements_processed": 16,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 16,
+  "statement_details": [
+    {
+      "statement_number": 1,
+      "source_file": "Services/Inventory.cs",
+      "method": "GetBestSellers",
+      "original_statement": "SELECT TOP(@p0) * FROM [dbo].[Products]",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.products LIMIT @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:46:42.859185\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 2,
+      "source_file": "Services/Inventory.cs",
+      "method": "GetAllCategories",
+      "original_statement": "SELECT * FROM [dbo].[Categories]",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.categories",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:46:43.910767\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 3,
+      "source_file": "Services/Inventory.cs",
+      "method": "GetAllProductsInCategory",
+      "original_statement": "SELECT * FROM [dbo].[Products] p INNER JOIN [dbo].[Categories] c ON p.CategoryId = c.CategoryId WHERE c.Name = @p0",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.products p INNER JOIN gadgetsonline_dbo.categories c ON p.categoryid = c.categoryid WHERE c.name = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:46:44.971553\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 4,
+      "source_file": "Services/Inventory.cs",
+      "method": "GetProductById",
+      "original_statement": "SELECT TOP(1) * FROM [dbo].[Products] WHERE ProductId = @p0",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.products WHERE productid = @p0 LIMIT 1",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:46:46.034990\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 5,
+      "source_file": "Services/Inventory.cs",
+      "method": "GetProductNameById",
+      "original_statement": "SELECT TOP(1) * FROM [dbo].[Products] WHERE ProductId = @p0",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.products WHERE productid = @p0 LIMIT 1",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:19.377402\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 6,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "GetCartItems",
+      "original_statement": "SELECT * FROM [dbo].[Carts] WHERE CartId = @p0",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.carts WHERE cartid = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:20.427083\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 7,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "GetCount",
+      "original_statement": "SELECT SUM(Count) FROM [dbo].[Carts] WHERE CartId = @p0",
+      "converted_statement": "SELECT SUM(count) FROM gadgetsonline_dbo.carts WHERE cartid = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:21.481521\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 8,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "GetTotal",
+      "original_statement": "SELECT SUM(c.Count * p.Price) FROM [dbo].[Carts] c INNER JOIN [dbo].[Products] p ON c.ProductId = p.ProductId WHERE c.CartId = @p0",
+      "converted_statement": "SELECT SUM(c.count * p.price) FROM gadgetsonline_dbo.carts c INNER JOIN gadgetsonline_dbo.products p ON c.productid = p.productid WHERE c.cartid = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:22.535020\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 9,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "AddToCart - SELECT",
+      "original_statement": "SELECT * FROM [dbo].[Carts] WHERE CartId = @p0 AND ProductId = @p1",
+      "converted_statement": "SELECT * FROM gadgetsonline_dbo.carts WHERE cartid = @p0 AND productid = @p1",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:38.716949\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 10,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "AddToCart - INSERT",
+      "original_statement": "INSERT INTO [dbo].[Carts] (CartId, ProductId, Count, DateCreated) VALUES (@p0, @p1, @p2, @p3)",
+      "converted_statement": "INSERT INTO gadgetsonline_dbo.carts (cartid, productid, count, datecreated) VALUES (@p0, @p1, @p2, @p3)",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:39.785060\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 11,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "RemoveFromCart",
+      "original_statement": "DELETE FROM [dbo].[Carts] WHERE RecordId = @p0",
+      "converted_statement": "DELETE FROM gadgetsonline_dbo.carts WHERE recordid = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:40.836151\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 12,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "EmptyCart",
+      "original_statement": "DELETE FROM [dbo].[Carts] WHERE CartId = @p0",
+      "converted_statement": "DELETE FROM gadgetsonline_dbo.carts WHERE cartid = @p0",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:47:41.887582\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 13,
+      "source_file": "Services/ShoppingCart.cs",
+      "method": "CreateOrder - INSERT OrderDetails",
+      "original_statement": "INSERT INTO [dbo].[OrderDetails] (ProductId, OrderId, UnitPrice, Quantity) VALUES (@p0, @p1, @p2, @p3)",
+      "converted_statement": "INSERT INTO gadgetsonline_dbo.orderdetails (productid, orderid, unitprice, quantity) VALUES (@p0, @p1, @p2, @p3)",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:48:00.684436\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 14,
+      "source_file": "Services/OrderProcessing.cs",
+      "method": "ProcessOrder",
+      "original_statement": "INSERT INTO [dbo].[Orders] (OrderDate, Username, FirstName, LastName, Address, City, State, PostalCode, Country, Phone, Email, Total) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11)",
+      "converted_statement": "INSERT INTO gadgetsonline_dbo.orders (orderdate, username, firstname, lastname, address, city, state, postalcode, country, phone, email, total) VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11)",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:48:01.735814\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 15,
+      "source_file": "Models/GadgetsOnlineInitializer.cs",
+      "method": "Seed - Categories",
+      "original_statement": "INSERT INTO [dbo].[Categories] (CategoryId, Name, Description) VALUES (@p0, @p1, @p2)",
+      "converted_statement": "INSERT INTO gadgetsonline_dbo.categories (categoryid, name, description) VALUES (@p0, @p1, @p2)",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:48:02.792244\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    },
+    {
+      "statement_number": 16,
+      "source_file": "Models/GadgetsOnlineInitializer.cs",
+      "method": "Seed - Products",
+      "original_statement": "INSERT INTO [dbo].[Products] (ProductId, CategoryId, Name, Price, ProductArtUrl) VALUES (@p0, @p1, @p2, @p3, @p4)",
+      "converted_statement": "INSERT INTO gadgetsonline_dbo.products (productid, categoryid, name, price, productarturl) VALUES (@p0, @p1, @p2, @p3, @p4)",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-06T00:48:03.857297\"}",
+      "dms_failure_reason": "Metadata model creation failed: {'error': \"Metadata model creation failed: {'default_error_details': {'message': 'The selected objects were not found.'}}\"}"
+    }
+  ]
+}
