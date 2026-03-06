@@ -1,0 +1,57 @@
+-- ============================================================================
+-- CONVERTED SQL STATEMENTS CATALOG
+-- Project: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- Date: 2026-03-06
+-- ============================================================================
+--
+-- CONVERSION RESULTS:
+-- ============================================================================
+--
+-- No SQL statements required conversion.
+--
+-- This application uses Entity Framework 6 with LINQ for ALL data access.
+-- No inline SQL statements were found during the comprehensive scan
+-- (see extracted_statements.sql for full scan details of all 39 files).
+--
+-- The EF provider (EntityFramework6.Npgsql) handles SQL generation at runtime,
+-- automatically producing PostgreSQL-compatible SQL from LINQ expressions.
+--
+-- DMS MCP Tool (dms-mcp___statement_conversion_tool) was NOT invoked because
+-- there were no static SQL strings to convert. The comprehensive scan in Step 1
+-- confirmed that zero inline SQL, parameterized SQL, StringBuilder SQL, raw SQL
+-- EF methods, or stored procedure calls exist in the codebase.
+--
+-- SQL Equivalency Tool (sql-equivalency___validate_sql_equivalence) was NOT
+-- invoked because there were no statement pairs to validate.
+--
+-- TOTAL STATEMENTS CONVERTED: 0
+-- - Successfully converted by DMS: 0
+-- - Manually converted (DMS failure): 0
+-- - Failed conversion: 0
+--
+-- DMS TOOL CONFIGURATION (would have used if statements existed):
+-- ============================================================================
+-- - Migration Project: arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U
+-- - Database Name: GadgetsOnline
+-- - Schema Name: dbo (source) -> gadgetsonline_dbo (target)
+-- - Region: us-east-1
+--
+-- MIGRATION STATUS:
+-- ============================================================================
+-- The following PostgreSQL migration components are already in place:
+-- - Package: EntityFramework6.Npgsql v6.4.3 (EF6 PostgreSQL provider)
+-- - Package: Npgsql v4.1.3 (PostgreSQL ADO.NET data provider)
+-- - Connection String: Host=gadgetsonline-sqlserver.c6nek0euoyl0.us-east-1.rds.amazonaws.com;Database=postgres
+-- - EF Provider: NpgsqlServices, NpgsqlConnectionFactory
+-- - DB Provider Factory: Npgsql.NpgsqlFactory
+-- - Entity Models: All mapped to lowercase table/column names with gadgetsonline_dbo schema
+--   - Categories -> gadgetsonline_dbo.categories
+--   - Products -> gadgetsonline_dbo.products
+--   - Carts -> gadgetsonline_dbo.carts
+--   - Orders -> gadgetsonline_dbo.orders
+--   - OrderDetails -> gadgetsonline_dbo.orderdetails
+--
+-- No Microsoft.Data.SqlClient or System.Data.SqlClient references remain.
+-- No SqlConnection, SqlCommand, SqlDataReader, or SqlParameter references remain.
+-- ============================================================================

@@ -1,0 +1,60 @@
+{
+  "number_of_statements_processed": 0,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 0,
+  "statement_details": [],
+  "scan_summary": {
+    "project": "GadgetsOnline",
+    "migration_type": "Microsoft SQL Server to PostgreSQL",
+    "scan_date": "2026-03-06",
+    "total_files_scanned": 39,
+    "cs_files_scanned": 22,
+    "cshtml_files_scanned": 13,
+    "config_files_scanned": 4,
+    "data_access_pattern": "Entity Framework 6 with LINQ (no inline SQL)",
+    "ef_provider": "EntityFramework6.Npgsql 6.4.3",
+    "npgsql_driver": "Npgsql 4.1.3",
+    "inline_sql_statements_found": 0,
+    "string_concatenation_sql_found": 0,
+    "parameterized_sql_found": 0,
+    "stringbuilder_sql_found": 0,
+    "stored_procedure_calls_found": 0,
+    "raw_sql_ef_methods_found": 0,
+    "sql_server_types_found": 0,
+    "sql_client_imports_found": 0,
+    "dms_tool_invocations": 0,
+    "equivalency_tool_invocations": 0,
+    "reason_no_statements": "This application exclusively uses Entity Framework 6 LINQ for all data access operations. The EF provider (EntityFramework6.Npgsql) generates PostgreSQL-compatible SQL at runtime from LINQ expressions. No static SQL strings exist in the codebase. Comprehensive scan of all 39 files (22 .cs, 13 .cshtml, 4 config files) confirmed zero inline SQL statements. Therefore, no SQL statement pairs exist to validate for equivalency.",
+    "search_patterns_used": [
+      "Inline SQL strings: SELECT, INSERT, UPDATE, DELETE, EXEC, CREATE, DROP, ALTER",
+      "String concatenation SQL patterns",
+      "Parameterized SQL (@param patterns)",
+      "StringBuilder-constructed SQL",
+      "SqlConnection, SqlCommand, SqlDataReader, SqlParameter usage",
+      "Microsoft.Data.SqlClient or System.Data.SqlClient imports",
+      "Raw SQL EF methods: FromSqlRaw, FromSql, ExecuteSql, SqlQuery, Database.Execute",
+      "Stored procedure calls: EXEC, sp_, CommandType.StoredProcedure",
+      "Transaction handling: BeginTransaction, CommitTransaction, RollbackTransaction"
+    ],
+    "false_positives_dismissed": [
+      "GadgetsOnlineEntities.cs:18: 'NpgsqlConnectionFactory' matched 'Connection' substring - Npgsql type, not SqlConnection",
+      "Views/ShoppingCart/Index.cshtml:56: '<div id=\"update-message\">' - HTML element, not SQL UPDATE statement"
+    ],
+    "postgresql_migration_status": {
+      "packages_migrated": true,
+      "packages_detail": "EntityFramework6.Npgsql 6.4.3 and Npgsql 4.1.3 present; no SqlClient packages",
+      "connection_string_migrated": true,
+      "connection_string_detail": "Uses Host= format pointing to PostgreSQL RDS instance",
+      "ef_provider_migrated": true,
+      "ef_provider_detail": "NpgsqlServices and NpgsqlConnectionFactory configured in GadgetsOnlineEntities.cs and app.config",
+      "db_provider_factory_migrated": true,
+      "db_provider_factory_detail": "Npgsql.NpgsqlFactory configured in app.config",
+      "model_classes_migrated": true,
+      "model_classes_detail": "All entities mapped to lowercase PostgreSQL table/column names with gadgetsonline_dbo schema via both [Table]/[Column] attributes and OnModelCreating fluent API",
+      "ado_net_classes_migrated": true,
+      "ado_net_classes_detail": "No SqlConnection/SqlCommand/SqlDataReader/SqlParameter references found; application uses EF6 DbContext exclusively",
+      "no_sql_server_references_remaining": true
+    }
+  }
+}

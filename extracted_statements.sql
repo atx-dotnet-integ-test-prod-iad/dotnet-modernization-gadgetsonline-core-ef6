@@ -1,0 +1,104 @@
+-- ============================================================================
+-- EXTRACTED SQL STATEMENTS CATALOG
+-- Project: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- Date: 2026-03-06
+-- ============================================================================
+--
+-- COMPREHENSIVE SCAN RESULTS:
+-- ============================================================================
+-- 
+-- This application uses Entity Framework 6 with LINQ for ALL data access.
+-- No inline SQL statements exist anywhere in the codebase.
+--
+-- All database operations are performed through DbContext methods:
+--   - _gadgetsOnlineEntities.Products.Where(...)
+--   - _gadgetsOnlineEntities.Products.Take(count).ToList()
+--   - _gadgetsOnlineEntities.Categories.ToList()
+--   - _gadgetsOnlineEntities.Carts.SingleOrDefault(...)
+--   - _gadgetsOnlineEntities.Carts.Add(...)
+--   - _gadgetsOnlineEntities.Carts.Remove(...)
+--   - _gadgetsOnlineEntities.Orders.Add(...)
+--   - _gadgetsOnlineEntities.OrderDetails.Add(...)
+--   - _gadgetsOnlineEntities.SaveChanges()
+--   - LINQ query syntax (from ... in ... where ... select ...)
+--
+-- The EF provider (EntityFramework6.Npgsql) handles SQL generation at runtime.
+-- These are ORM-generated queries that cannot be extracted as static SQL strings.
+--
+-- FILES SCANNED (39 files):
+-- ============================================================================
+-- C# Source Files (22 files, excluding obj/):
+-- 1.  Services/Inventory.cs                 - EF6 LINQ queries only (GetBestSellers, GetAllCategories, GetAllProductsInCategory, GetProductById, GetProductNameById)
+-- 2.  Services/ShoppingCart.cs               - EF6 LINQ queries only (GetCartItems, GetTotal, GetCount, AddToCart, RemoveFromCart, CreateOrder, EmptyCart)
+-- 3.  Services/OrderProcessing.cs            - EF6 LINQ queries only (ProcessOrder adds Order/OrderDetails via DbContext)
+-- 4.  Services/IInventory.cs                 - Interface definition only, no SQL
+-- 5.  Services/IShoppingCart.cs              - Interface definition only, no SQL
+-- 6.  Services/IOrderProcessing.cs           - Interface definition only, no SQL
+-- 7.  Controllers/HomeController.cs          - No SQL, delegates to IInventory service
+-- 8.  Controllers/StoreController.cs         - No SQL, delegates to IInventory service
+-- 9.  Controllers/ShoppingCartController.cs  - No SQL, delegates to IShoppingCart service
+-- 10. Controllers/CheckoutController.cs      - No SQL, delegates to IOrderProcessing service
+-- 11. Models/GadgetsOnlineEntities.cs        - DbContext configuration only (NpgsqlServices, NpgsqlConnectionFactory)
+-- 12. Models/GadgetsOnlineInitializer.cs     - EF6 Seed method using context.Categories.Add/context.Products.Add, no raw SQL
+-- 13. Models/Cart.cs                         - Entity model class only (Table/Column attributes for PostgreSQL mapping)
+-- 14. Models/Category.cs                     - Entity model class only (Table/Column attributes for PostgreSQL mapping)
+-- 15. Models/Order.cs                        - Entity model class only (Table/Column attributes for PostgreSQL mapping)
+-- 16. Models/OrderDetail.cs                  - Entity model class only (Table/Column attributes for PostgreSQL mapping)
+-- 17. Models/Product.cs                      - Entity model class only (Table/Column attributes for PostgreSQL mapping)
+-- 18. Components/CategoryMenuViewComponent.cs - No SQL, delegates to IInventory service
+-- 19. ViewModel/ShoppingCartViewModel.cs     - View model class only, no data access
+-- 20. ViewModel/ShoppingCartRemoveViewModel.cs - View model class only, no data access
+-- 21. Program.cs                             - Application entry point, no SQL
+-- 22. Startup.cs                             - DI configuration and EF6 database initialization, no raw SQL
+--
+-- View Files (.cshtml) (13 files):
+-- 23. Views/Checkout/AddressAndPayment.cshtml - HTML/Razor only, no SQL
+-- 24. Views/Checkout/Complete.cshtml          - HTML/Razor only, no SQL
+-- 25. Views/Home/About.cshtml                - HTML/Razor only, no SQL
+-- 26. Views/Home/Contact.cshtml              - HTML/Razor only, no SQL
+-- 27. Views/Home/Index.cshtml                - HTML/Razor only, no SQL
+-- 28. Views/Shared/Components/CategoryMenu/Default.cshtml - HTML/Razor only, no SQL
+-- 29. Views/Shared/Error.cshtml              - HTML/Razor only, no SQL
+-- 30. Views/Shared/_Layout.cshtml            - HTML/Razor only, no SQL
+-- 31. Views/ShoppingCart/Index.cshtml         - HTML/Razor/JS only, no SQL (contains JS for cart UI updates)
+-- 32. Views/Store/Browse.cshtml              - HTML/Razor only, no SQL
+-- 33. Views/Store/CategoryMenu.cshtml        - HTML/Razor only, no SQL
+-- 34. Views/Store/Details.cshtml             - HTML/Razor only, no SQL
+-- 35. Views/_ViewStart.cshtml                - Layout configuration, no SQL
+--
+-- Configuration Files (4 files):
+-- 36. GadgetsOnline.csproj                   - Project file: Npgsql 4.1.3, EntityFramework6.Npgsql 6.4.3 (no SqlClient packages)
+-- 37. appsettings.json                       - Connection string using Host= format (PostgreSQL)
+-- 38. app.config                             - EF provider config: Npgsql.NpgsqlServices, NpgsqlConnectionFactory, NpgsqlFactory
+-- 39. Views/Web.config                       - View engine configuration, no SQL
+--
+-- SEARCH PATTERNS USED:
+-- ============================================================================
+-- - Inline SQL strings: "SELECT", "INSERT", "UPDATE", "DELETE", "EXEC", "CREATE", "DROP", "ALTER"
+-- - String concatenation SQL: "SELECT * FROM " + variable patterns
+-- - Parameterized SQL: "WHERE id = @id" patterns
+-- - StringBuilder-constructed SQL: StringBuilder + SQL keyword patterns
+-- - SqlConnection, SqlCommand, SqlDataReader, SqlParameter usage
+-- - Microsoft.Data.SqlClient or System.Data.SqlClient imports
+-- - Raw SQL EF methods: FromSqlRaw, FromSql, ExecuteSql, SqlQuery, Database.Execute
+-- - Stored procedure calls: EXEC, sp_, CommandType.StoredProcedure
+-- - Transaction handling: BeginTransaction, CommitTransaction, RollbackTransaction
+--
+-- VERIFICATION COMMANDS USED:
+-- ============================================================================
+-- grep -rni "Microsoft.Data.SqlClient|System.Data.SqlClient" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni "SqlConnection|SqlCommand|SqlDataReader|SqlParameter" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni '"SELECT|"INSERT|"UPDATE|"DELETE|"EXEC|"CREATE|"DROP|"ALTER' GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni "StringBuilder.*SQL" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni "FromSqlRaw|FromSql|ExecuteSql|SqlQuery|Database.Execute" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni "EXEC |CommandType.StoredProcedure|sp_" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+-- grep -rni "BeginTransaction|CommitTransaction|RollbackTransaction" GadgetsOnline/ --include="*.cs" --include="*.cshtml"
+--
+-- FALSE POSITIVES IDENTIFIED AND DISMISSED:
+-- ============================================================================
+-- 1. GadgetsOnlineEntities.cs:18: "NpgsqlConnectionFactory" - contains "Connection" substring, but is Npgsql, not SqlConnection
+-- 2. Views/ShoppingCart/Index.cshtml:56: '<div id="update-message">' - HTML element, not SQL UPDATE statement
+--
+-- RESULT: 0 SQL statements extracted
+-- ============================================================================
