@@ -1,0 +1,40 @@
+{
+  "number_of_statements_processed": 0,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 0,
+  "statement_details": [],
+  "metadata": {
+    "project": "GadgetsOnline",
+    "scan_date": "2026-03-06",
+    "scan_summary": "Comprehensive scan of all .cs, .cshtml, .config, and .json files found zero raw SQL statements. The application uses Entity Framework 6 LINQ queries exclusively for all data access operations. No DMS MCP tool conversion or SQL Equivalency validation was required.",
+    "files_scanned": [
+      "GadgetsOnline/Services/Inventory.cs",
+      "GadgetsOnline/Services/ShoppingCart.cs",
+      "GadgetsOnline/Services/OrderProcessing.cs",
+      "GadgetsOnline/Models/GadgetsOnlineInitializer.cs",
+      "GadgetsOnline/Models/GadgetsOnlineEntities.cs",
+      "GadgetsOnline/Controllers/HomeController.cs",
+      "GadgetsOnline/Controllers/StoreController.cs",
+      "GadgetsOnline/Controllers/ShoppingCartController.cs",
+      "GadgetsOnline/Controllers/CheckoutController.cs",
+      "GadgetsOnline/Components/CategoryMenuViewComponent.cs",
+      "GadgetsOnline/Startup.cs",
+      "GadgetsOnline/Program.cs",
+      "GadgetsOnline/appsettings.json",
+      "GadgetsOnline/app.config",
+      "GadgetsOnline/GadgetsOnline.csproj"
+    ],
+    "search_patterns_used": [
+      "Inline SQL keywords: SELECT, INSERT INTO, UPDATE...SET, DELETE FROM, EXEC, CREATE TABLE, ALTER TABLE, DROP TABLE",
+      "String-based SQL patterns: quoted SQL keywords in string literals",
+      "ADO.NET classes: SqlCommand, SqlConnection, SqlDataReader, SqlParameter",
+      "SQL Client namespaces: Microsoft.Data.SqlClient, System.Data.SqlClient",
+      "EF raw SQL methods: ExecuteSqlCommand, FromSqlRaw, FromSqlInterpolated, Database.SqlQuery",
+      "Stored procedure patterns: StoredProcedure, CommandType.StoredProcedure, sp_, usp_",
+      "StringBuilder SQL patterns: StringBuilder with SQL, CommandText, CommandType",
+      "SQL Server connection strings: Data Source=, Server=...Database=, Initial Catalog"
+    ],
+    "data_access_patterns_found": "All data access uses Entity Framework 6 LINQ queries (Where, Take, FirstOrDefault, ToList, SingleOrDefault, Single, Sum, Add, Remove, SaveChanges)"
+  }
+}

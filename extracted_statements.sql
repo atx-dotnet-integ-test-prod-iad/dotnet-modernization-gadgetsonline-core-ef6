@@ -1,0 +1,56 @@
+-- ============================================================================
+-- EXTRACTED SQL STATEMENTS CATALOG
+-- Project: GadgetsOnline - SQL Server to PostgreSQL Migration
+-- Date: 2026-03-06
+-- ============================================================================
+
+-- COMPREHENSIVE SCAN RESULTS:
+-- No raw SQL statements were found in the codebase.
+-- The application uses Entity Framework 6 with LINQ queries exclusively for all
+-- database access operations.
+
+-- FILES SCANNED:
+-- 1. GadgetsOnline/Services/Inventory.cs - LINQ queries (Where, Take, FirstOrDefault, ToList)
+-- 2. GadgetsOnline/Services/ShoppingCart.cs - LINQ queries (SingleOrDefault, Where, Sum, Single)
+-- 3. GadgetsOnline/Services/OrderProcessing.cs - EF Add/SaveChanges
+-- 4. GadgetsOnline/Models/GadgetsOnlineInitializer.cs - EF seed data via Add/SaveChanges
+-- 5. GadgetsOnline/Models/GadgetsOnlineEntities.cs - DbContext configuration (no raw SQL)
+-- 6. GadgetsOnline/Controllers/HomeController.cs - Service calls only (no data access)
+-- 7. GadgetsOnline/Controllers/StoreController.cs - Service calls only (no data access)
+-- 8. GadgetsOnline/Controllers/ShoppingCartController.cs - Service calls only (no data access)
+-- 9. GadgetsOnline/Controllers/CheckoutController.cs - Service calls only (no data access)
+-- 10. GadgetsOnline/Components/CategoryMenuViewComponent.cs - Service calls only (no data access)
+-- 11. GadgetsOnline/Startup.cs - DI configuration and EF initialization (no raw SQL)
+-- 12. GadgetsOnline/Program.cs - Host builder (no data access)
+-- 13. GadgetsOnline/appsettings.json - Connection string (PostgreSQL format)
+-- 14. GadgetsOnline/app.config - EF6 provider config (Npgsql)
+-- 15. GadgetsOnline/GadgetsOnline.csproj - Package references
+
+-- SEARCH PATTERNS USED:
+-- Inline SQL: SELECT, INSERT INTO, UPDATE...SET, DELETE FROM, EXEC, CREATE TABLE, ALTER TABLE, DROP TABLE
+-- String-based SQL: "SELECT, "INSERT, "UPDATE, "DELETE, "EXEC, "CREATE, "ALTER, "DROP
+-- ADO.NET classes: SqlCommand, SqlConnection, SqlDataReader, SqlParameter
+-- SQL Client namespaces: Microsoft.Data.SqlClient, System.Data.SqlClient
+-- EF raw SQL methods: ExecuteSqlCommand, FromSqlRaw, FromSqlInterpolated, Database.SqlQuery
+-- Stored procedures: StoredProcedure, CommandType.StoredProcedure, sp_, usp_
+-- StringBuilder SQL: StringBuilder.*SQL, CommandText, .CommandType
+-- Connection strings: Data Source=, Server=...Database=, Initial Catalog
+
+-- DATA ACCESS PATTERNS IDENTIFIED (ALL EF LINQ-BASED):
+-- 1. Inventory.GetBestSellers: _gadgetsOnlineEntities.Products.Take(count).ToList()
+-- 2. Inventory.GetAllCategories: _gadgetsOnlineEntities.Categories.ToList()
+-- 3. Inventory.GetAllProductsInCategory: _gadgetsOnlineEntities.Products.Where(p => p.Category.Name == category).ToList()
+-- 4. Inventory.GetProductById: _gadgetsOnlineEntities.Products.Where(p => p.ProductId == id).FirstOrDefault()
+-- 5. Inventory.GetProductNameById: _gadgetsOnlineEntities.Products.Where(p => p.ProductId == id).FirstOrDefault().Name
+-- 6. ShoppingCart.GetCartItems: _gadgetsOnlineEntities.Carts.Where(cart => cart.CartId == ShoppingCartId).ToList()
+-- 7. ShoppingCart.AddToCart: _gadgetsOnlineEntities.Carts.SingleOrDefault(...) + Add/SaveChanges
+-- 8. ShoppingCart.RemoveFromCart: _gadgetsOnlineEntities.Carts.Single(...) + Remove/SaveChanges
+-- 9. ShoppingCart.GetCount: LINQ query syntax with Sum()
+-- 10. ShoppingCart.GetTotal: LINQ query syntax with Sum()
+-- 11. ShoppingCart.EmptyCart: _gadgetsOnlineEntities.Carts.Where(...) + Remove/SaveChanges
+-- 12. ShoppingCart.CreateOrder: Iterating cart items, Add OrderDetails, SaveChanges
+-- 13. OrderProcessing.ProcessOrder: _gadgetsOnlineEntities.Orders.Add(order) + SaveChanges
+-- 14. GadgetsOnlineInitializer.Seed: context.Categories.Add(...) + context.Products.Add(...) + SaveChanges
+
+-- CONCLUSION: No raw SQL statements to extract or convert.
+-- The Entity Framework ORM handles all SQL generation internally.
