@@ -1,0 +1,139 @@
+{
+  "report_metadata": {
+    "project_name": "GadgetsOnline",
+    "migration_type": "Microsoft SQL Server to PostgreSQL",
+    "report_date": "2026-03-06",
+    "application_type": "ASP.NET Core 8.0 with Entity Framework 6",
+    "target_framework": "net8.0",
+    "solution_file": "GadgetsOnline.sln",
+    "data_access_pattern": "EF6 LINQ (no raw SQL statements)"
+  },
+  "dms_migration_details": {
+    "migration_project_arn": "arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U",
+    "source_database": "GadgetsOnline (SQL Server 2019)",
+    "target_database": "postgres (PostgreSQL 13)",
+    "target_schema": "gadgetsonline_dbo"
+  },
+  "sql_statement_processing": {
+    "total_files_analyzed": 33,
+    "cs_files_analyzed": 22,
+    "cshtml_files_analyzed": 13,
+    "config_files_analyzed": 3,
+    "total_raw_sql_statements_found": 0,
+    "total_statements_passed_through_dms": 0,
+    "total_statements_successfully_converted_by_dms": 0,
+    "total_statements_requiring_manual_conversion": 0,
+    "explanation": "Application uses Entity Framework 6 with LINQ exclusively. No raw or inline SQL statements exist in the codebase."
+  },
+  "sql_equivalency_validation": {
+    "total_statement_pairs_validated": 0,
+    "equivalent_statements": 0,
+    "non_equivalent_statements": 0,
+    "statements_with_validation_errors": 0,
+    "explanation": "No SQL statements to validate since zero raw SQL statements were found."
+  },
+  "package_changes": {
+    "packages_removed": [],
+    "packages_added": [],
+    "packages_already_present": [
+      {
+        "name": "Npgsql",
+        "version": "5.0.18",
+        "status": "Already present - no change needed"
+      },
+      {
+        "name": "EntityFramework6.Npgsql",
+        "version": "6.4.3",
+        "status": "Already present - no change needed"
+      },
+      {
+        "name": "EntityFramework",
+        "version": "6.5.1",
+        "status": "Already present - no change needed"
+      }
+    ],
+    "sql_server_packages_found": false,
+    "explanation": "The .csproj already has the correct PostgreSQL packages (Npgsql, EntityFramework6.Npgsql, EntityFramework). No Microsoft.Data.SqlClient or System.Data.SqlClient packages were present."
+  },
+  "ado_net_class_changes": {
+    "sqlconnection_to_npgsqlconnection": 0,
+    "sqlcommand_to_npgsqlcommand": 0,
+    "sqldatareader_to_npgsqldatareader": 0,
+    "sqlparameter_to_npgsqlparameter": 0,
+    "sql_server_imports_replaced": 0,
+    "explanation": "No SQL Server ADO.NET classes (SqlConnection, SqlCommand, SqlDataReader, SqlParameter) were found in the codebase. The application uses EF6 via Npgsql provider exclusively."
+  },
+  "connection_string_changes": {
+    "changes_made": false,
+    "current_format": "PostgreSQL (Host=, Database=, Username=, Password=)",
+    "connection_string_location": "GadgetsOnline/appsettings.json",
+    "explanation": "Connection string was already in PostgreSQL format using Host=, Database=, Username=, Password= parameters."
+  },
+  "ef6_provider_configuration": {
+    "npgsql_provider_registered": true,
+    "npgsql_connection_factory_configured": true,
+    "db_configuration_type_attribute_present": true,
+    "postgresql_table_column_mappings_configured": true,
+    "configuration_locations": {
+      "app_config": "GadgetsOnline/app.config",
+      "db_configuration_class": "GadgetsOnline/Models/GadgetsOnlineEntities.cs (GadgetsOnlineEntitiesPostgreSqlConfiguration)",
+      "entity_mappings": "GadgetsOnline/Models/GadgetsOnlineEntities.cs (OnModelCreating) and entity model data annotations"
+    },
+    "explanation": "All EF6 provider configuration was already in place for PostgreSQL via Npgsql."
+  },
+  "build_status": {
+    "build_command": "dotnet build GadgetsOnline.sln",
+    "build_result": "SUCCESS",
+    "warnings": 0,
+    "errors": 0,
+    "output_dll": "GadgetsOnline/bin/Debug/net8.0/GadgetsOnline.dll"
+  },
+  "files_modified_during_migration": {
+    "source_code_files_modified": 0,
+    "report_files_generated": [
+      "extracted_statements.sql",
+      "converted_statements.sql",
+      "sql_equivalency_validation_report.json",
+      "migration_summary_report.json"
+    ],
+    "explanation": "No source code modifications were required. The application was already fully configured for PostgreSQL via Npgsql EF6 provider. Only migration report/documentation artifacts were generated."
+  },
+  "validation_checklist": {
+    "all_sql_server_packages_replaced": {
+      "status": "PASS",
+      "detail": "No SQL Server packages present. Npgsql packages already configured."
+    },
+    "all_ado_net_classes_replaced": {
+      "status": "PASS",
+      "detail": "No SQL Server ADO.NET classes present. Application uses EF6 via Npgsql."
+    },
+    "all_sql_statements_processed_through_dms": {
+      "status": "PASS",
+      "detail": "Zero raw SQL statements found - no DMS processing required."
+    },
+    "comprehensive_sql_catalog_generated": {
+      "status": "PASS",
+      "detail": "extracted_statements.sql documents all 33 files analyzed with zero SQL found."
+    },
+    "all_statement_pairs_validated_for_equivalency": {
+      "status": "PASS",
+      "detail": "Zero statements to validate - report generated with zero counts."
+    },
+    "equivalency_report_generated": {
+      "status": "PASS",
+      "detail": "sql_equivalency_validation_report.json generated with all required fields."
+    },
+    "connection_strings_updated": {
+      "status": "PASS",
+      "detail": "Connection string already in PostgreSQL format."
+    },
+    "transaction_handling_updated": {
+      "status": "PASS",
+      "detail": "No raw transaction code present. EF6 handles transactions internally."
+    },
+    "application_builds_successfully": {
+      "status": "PASS",
+      "detail": "Build succeeded with 0 warnings and 0 errors."
+    }
+  }
+}

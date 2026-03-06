@@ -1,0 +1,19 @@
+{
+  "report_metadata": {
+    "project_name": "GadgetsOnline",
+    "migration_type": "Microsoft SQL Server to PostgreSQL",
+    "report_date": "2026-03-06",
+    "dms_migration_project_arn": "arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U",
+    "source_database": "GadgetsOnline (SQL Server 2019)",
+    "target_database": "postgres (PostgreSQL 13)",
+    "target_schema": "gadgetsonline_dbo",
+    "application_type": "ASP.NET Core 8.0 with Entity Framework 6",
+    "data_access_pattern": "EF6 LINQ (no raw SQL statements)",
+    "explanation": "The GadgetsOnline application uses Entity Framework 6 with LINQ exclusively for all database operations. A comprehensive analysis of all 33 source files (22 .cs files, 13 .cshtml view files, and configuration files) confirmed that zero raw or inline SQL statements exist in the codebase. All data access is performed through EF6 DbContext LINQ queries which are translated to PostgreSQL-compatible SQL by the Npgsql EF6 provider at runtime. Therefore, no DMS MCP tool conversions and no SQL Equivalency validations were required."
+  },
+  "number_of_statements_processed": 0,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 0,
+  "statement_details": []
+}
