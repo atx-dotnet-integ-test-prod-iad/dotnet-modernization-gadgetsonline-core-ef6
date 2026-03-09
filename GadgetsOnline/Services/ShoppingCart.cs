@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GadgetsOnline.Models;
@@ -22,14 +22,14 @@ namespace GadgetsOnline.Services
         public const string CartSessionKey = "CartId";
 
         //xxxx public static ShoppingCart GetCart(HttpContext context) //OLD
-        public ShoppingCart GetCart(HttpContext context)
+        public IShoppingCart GetCart(HttpContext context)
         {
             //xxxx var cart = new ShoppingCart(); //OLD
             ShoppingCartId = GetCartId(context);
             return this;
         }
 
-        internal int CreateOrder(Order order)
+        public int CreateOrder(Order order)
         {
             decimal orderTotal = 0;
             var cartItems = GetCartItems();
@@ -116,7 +116,7 @@ namespace GadgetsOnline.Services
             return count ?? 0;
         }
 
-        internal int RemoveFromCart(int id)
+        public int RemoveFromCart(int id)
         {
             // Get the cart
             var cartItem = _gadgetsOnlineEntities.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.ProductId == id);

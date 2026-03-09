@@ -7,10 +7,12 @@ namespace GadgetsOnline.Services
     public interface IShoppingCart
     {
         void AddToCart(int id);
-        ShoppingCart GetCart(HttpContext context);
+        IShoppingCart GetCart(HttpContext context);
         string GetCartId(HttpContext context);
         List<Cart> GetCartItems();
         int GetCount();
         decimal GetTotal();
+        int RemoveFromCart(int id);
+        int CreateOrder(Order order);
     }
 }
