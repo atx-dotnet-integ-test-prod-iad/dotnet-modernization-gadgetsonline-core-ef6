@@ -1,9 +1,29 @@
 using GadgetsOnline.Models;
+using Npgsql;
+using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GadgetsOnline.Models
 {
+    // ---------------------------------------------------------------------------
+    // EF6 PostgreSQL provider configuration
+    // Registers the Npgsql ADO.NET provider and connection factory so that
+    // EF6 uses PostgreSQL instead of SQL Server for all database operations.
+    // ---------------------------------------------------------------------------
+    public class GadgetsOnlineEntitiesPostgreSqlConfiguration : DbConfiguration
+    {
+        public GadgetsOnlineEntitiesPostgreSqlConfiguration()
+        {
+            SetProviderServices("Npgsql", NpgsqlServices.Instance);
+        }
+    }
+
+    [DbConfigurationType(typeof(GadgetsOnlineEntitiesPostgreSqlConfiguration))]
     public class GadgetsOnlineEntities : DbContext
     {
         // Default constructor using connection string name from config
@@ -27,32 +47,132 @@ namespace GadgetsOnline.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        // ---------------------------------------------------------------------------
+        // DateTime UTC fix for Npgsql: ensures all DateTime values written to
+        // PostgreSQL are treated as UTC (Npgsql requires DateTimeKind.Utc).
+        // ---------------------------------------------------------------------------
+        public override int SaveChanges()
         {
-            // Configure relationships
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Products)
-                .WithRequired(p => p.Category)
-                .HasForeignKey(p => p.CategoryId);
-
-            modelBuilder.Entity<Cart>()
-                .HasRequired(c => c.Product)
-                .WithMany()
-                .HasForeignKey(c => c.ProductId);
-
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.OrderDetails)
-                .WithRequired(od => od.Order)
-                .HasForeignKey(od => od.OrderId);
-
-            modelBuilder.Entity<OrderDetail>()
-                .HasRequired(od => od.Product)
-                .WithMany()
-                .HasForeignKey(od => od.ProductId);
+            FixDateTimeKinds();
+            return base.SaveChanges();
         }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            FixDateTimeKinds();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void FixDateTimeKinds()
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+            foreach (var entry in entries)
+            {
+                foreach (var property in entry.CurrentValues.PropertyNames)
+                {
+                    var value = entry.CurrentValues[property];
+                    if (value is DateTime dateTime && dateTime.Kind != DateTimeKind.Utc)
+                    {
+                        entry.CurrentValues[property] = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+                    }
+                }
+            }
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // -----------------------------------------------------------------------
+            // Product — table: gadgetsonline_dbo.products
+            // -----------------------------------------------------------------------
+            {
+                var entity = modelBuilder.Entity<Product>();
+                entity.ToTable("products", "gadgetsonline_dbo");
+                entity.Property(e => e.ProductId).HasColumnName("productid");
+                entity.Property(e => e.CategoryId).HasColumnName("categoryid");
+                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Price).HasColumnName("price");
+                entity.Property(e => e.ProductArtUrl).HasColumnName("productarturl");
+            }
+
+            // -----------------------------------------------------------------------
+            // Category — table: gadgetsonline_dbo.categories
+            // -----------------------------------------------------------------------
+            {
+                var entity = modelBuilder.Entity<Category>();
+                entity.ToTable("categories", "gadgetsonline_dbo");
+                entity.Property(e => e.CategoryId).HasColumnName("categoryid");
+                entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.Description).HasColumnName("description");
+
+                // Relationship: Category → Products
+                entity.HasMany(c => c.Products)
+                    .WithRequired(p => p.Category)
+                    .HasForeignKey(p => p.CategoryId);
+            }
+
+            // -----------------------------------------------------------------------
+            // Cart — table: gadgetsonline_dbo.carts
+            // -----------------------------------------------------------------------
+            {
+                var entity = modelBuilder.Entity<Cart>();
+                entity.ToTable("carts", "gadgetsonline_dbo");
+                entity.Property(e => e.RecordId).HasColumnName("recordid");
+                entity.Property(e => e.CartId).HasColumnName("cartid");
+                entity.Property(e => e.ProductId).HasColumnName("productid");
+                entity.Property(e => e.Count).HasColumnName("count");
+                entity.Property(e => e.DateCreated).HasColumnName("datecreated");
+
+                // Relationship: Cart → Product
+                entity.HasRequired(c => c.Product)
+                    .WithMany()
+                    .HasForeignKey(c => c.ProductId);
+            }
+
+            // -----------------------------------------------------------------------
+            // Order — table: gadgetsonline_dbo.orders
+            // -----------------------------------------------------------------------
+            {
+                var entity = modelBuilder.Entity<Order>();
+                entity.ToTable("orders", "gadgetsonline_dbo");
+                entity.Property(e => e.OrderId).HasColumnName("orderid");
+                entity.Property(e => e.OrderDate).HasColumnName("orderdate");
+                entity.Property(e => e.Username).HasColumnName("username");
+                entity.Property(e => e.FirstName).HasColumnName("firstname");
+                entity.Property(e => e.LastName).HasColumnName("lastname");
+                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.City).HasColumnName("city");
+                entity.Property(e => e.State).HasColumnName("state");
+                entity.Property(e => e.PostalCode).HasColumnName("postalcode");
+                entity.Property(e => e.Country).HasColumnName("country");
+                entity.Property(e => e.Phone).HasColumnName("phone");
+                entity.Property(e => e.Email).HasColumnName("email");
+                entity.Property(e => e.Total).HasColumnName("total");
+
+                // Relationship: Order → OrderDetails
+                entity.HasMany(o => o.OrderDetails)
+                    .WithRequired(od => od.Order)
+                    .HasForeignKey(od => od.OrderId);
+            }
+
+            // -----------------------------------------------------------------------
+            // OrderDetail — table: gadgetsonline_dbo.orderdetails
+            // -----------------------------------------------------------------------
+            {
+                var entity = modelBuilder.Entity<OrderDetail>();
+                entity.ToTable("orderdetails", "gadgetsonline_dbo");
+                entity.Property(e => e.OrderDetailId).HasColumnName("orderdetailid");
+                entity.Property(e => e.OrderId).HasColumnName("orderid");
+                entity.Property(e => e.ProductId).HasColumnName("productid");
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
+                entity.Property(e => e.UnitPrice).HasColumnName("unitprice");
+
+                // Relationship: OrderDetail → Product
+                entity.HasRequired(od => od.Product)
+                    .WithMany()
+                    .HasForeignKey(od => od.ProductId);
+            }
+        }
     }
-
-
 }
-
