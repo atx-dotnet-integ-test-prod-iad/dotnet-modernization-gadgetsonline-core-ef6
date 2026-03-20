@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using GadgetsOnline.Models;
 
 namespace GadgetsOnline.Services
@@ -14,8 +12,6 @@ namespace GadgetsOnline.Services
         {
             _gadgetsOnlineEntities = gadgetsOnlineEntities;
         }
-
-        //GadgetsOnlineEntities store = new GadgetsOnlineEntities();
 
         public List<Product> GetBestSellers(int count)
         {

@@ -1,8 +1,7 @@
-using GadgetsOnline.Services;
+﻿using GadgetsOnline.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GadgetsOnline.Controllers
@@ -15,10 +14,8 @@ namespace GadgetsOnline.Controllers
             _inventory = inventory;
         }
 
-        //Inventory inventory;
         public ActionResult Index()
         {
-            //inventory = new Inventory();
             var products = _inventory.GetBestSellers(6);
             return View(products);
         }

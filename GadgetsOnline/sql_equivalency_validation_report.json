@@ -1,0 +1,47 @@
+{
+  "number_of_statements_processed": 0,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 0,
+  "statement_details": [],
+  "scan_summary": {
+    "total_files_scanned": 22,
+    "files_scanned": [
+      "GadgetsOnline/Services/Inventory.cs",
+      "GadgetsOnline/Services/ShoppingCart.cs",
+      "GadgetsOnline/Services/OrderProcessing.cs",
+      "GadgetsOnline/Services/IInventory.cs",
+      "GadgetsOnline/Services/IShoppingCart.cs",
+      "GadgetsOnline/Services/IOrderProcessing.cs",
+      "GadgetsOnline/Models/GadgetsOnlineEntities.cs",
+      "GadgetsOnline/Models/GadgetsOnlineInitializer.cs",
+      "GadgetsOnline/Models/Cart.cs",
+      "GadgetsOnline/Models/Category.cs",
+      "GadgetsOnline/Models/Order.cs",
+      "GadgetsOnline/Models/OrderDetail.cs",
+      "GadgetsOnline/Models/Product.cs",
+      "GadgetsOnline/Controllers/HomeController.cs",
+      "GadgetsOnline/Controllers/StoreController.cs",
+      "GadgetsOnline/Controllers/ShoppingCartController.cs",
+      "GadgetsOnline/Controllers/CheckoutController.cs",
+      "GadgetsOnline/Components/CategoryMenuViewComponent.cs",
+      "GadgetsOnline/Program.cs",
+      "GadgetsOnline/Startup.cs",
+      "GadgetsOnline/ViewModel/ShoppingCartViewModel.cs",
+      "GadgetsOnline/ViewModel/ShoppingCartRemoveViewModel.cs"
+    ],
+    "scan_patterns_used": [
+      "Inline SQL string literals (SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, EXEC, EXECUTE)",
+      "String concatenation SQL patterns",
+      "Parameterized SQL patterns",
+      "StringBuilder-constructed SQL",
+      "FromSqlRaw / ExecuteSqlRaw / SqlQueryRaw calls",
+      "Database.SqlQuery / Database.ExecuteSqlCommand calls",
+      "SqlConnection / SqlCommand / SqlDataReader / SqlParameter references",
+      "Microsoft.Data.SqlClient / System.Data.SqlClient imports",
+      "Stored procedure invocations (EXEC, sp_, xp_)",
+      "Transaction handling code (BeginTransaction, CommitTransaction, RollbackTransaction)"
+    ],
+    "conclusion": "This application uses Entity Framework 6 with LINQ queries exclusively. ZERO inline SQL statements were found across all 22 source files. No DMS conversion or equivalency validation was needed."
+  }
+}

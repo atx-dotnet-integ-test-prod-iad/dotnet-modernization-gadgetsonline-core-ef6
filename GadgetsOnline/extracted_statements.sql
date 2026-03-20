@@ -1,0 +1,66 @@
+-- ============================================================================
+-- EXTRACTED SQL STATEMENTS CATALOG
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- Application: GadgetsOnline (.NET ADO / Entity Framework 6)
+-- Date: 2026-03-20
+-- ============================================================================
+--
+-- COMPREHENSIVE SCAN RESULTS:
+-- ===========================================================================
+-- All 22 .cs source files were exhaustively scanned for:
+--   1. Inline SQL string literals (SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, DROP, EXEC, EXECUTE)
+--   2. String concatenation SQL patterns ("SELECT * FROM " + tableName)
+--   3. Parameterized SQL patterns ("SELECT * FROM table WHERE id = @id")
+--   4. StringBuilder-constructed SQL
+--   5. FromSqlRaw / ExecuteSqlRaw / SqlQueryRaw / Database.SqlQuery / Database.ExecuteSqlCommand calls
+--   6. SqlConnection, SqlCommand, SqlDataReader, SqlParameter references
+--   7. Microsoft.Data.SqlClient or System.Data.SqlClient imports
+--   8. Stored procedure invocations (EXEC, sp_, xp_)
+--   9. Transaction handling code (BeginTransaction, CommitTransaction, RollbackTransaction)
+--
+-- FILES SCANNED:
+--   1.  GadgetsOnline/Services/Inventory.cs                     - NO SQL FOUND
+--   2.  GadgetsOnline/Services/ShoppingCart.cs                   - NO SQL FOUND
+--   3.  GadgetsOnline/Services/OrderProcessing.cs                - NO SQL FOUND
+--   4.  GadgetsOnline/Services/IInventory.cs                     - NO SQL FOUND
+--   5.  GadgetsOnline/Services/IShoppingCart.cs                  - NO SQL FOUND
+--   6.  GadgetsOnline/Services/IOrderProcessing.cs               - NO SQL FOUND
+--   7.  GadgetsOnline/Models/GadgetsOnlineEntities.cs            - NO SQL FOUND
+--   8.  GadgetsOnline/Models/GadgetsOnlineInitializer.cs         - NO SQL FOUND
+--   9.  GadgetsOnline/Models/Cart.cs                             - NO SQL FOUND
+--   10. GadgetsOnline/Models/Category.cs                         - NO SQL FOUND
+--   11. GadgetsOnline/Models/Order.cs                            - NO SQL FOUND
+--   12. GadgetsOnline/Models/OrderDetail.cs                      - NO SQL FOUND
+--   13. GadgetsOnline/Models/Product.cs                          - NO SQL FOUND
+--   14. GadgetsOnline/Controllers/HomeController.cs              - NO SQL FOUND
+--   15. GadgetsOnline/Controllers/StoreController.cs             - NO SQL FOUND
+--   16. GadgetsOnline/Controllers/ShoppingCartController.cs      - NO SQL FOUND
+--   17. GadgetsOnline/Controllers/CheckoutController.cs          - NO SQL FOUND
+--   18. GadgetsOnline/Components/CategoryMenuViewComponent.cs    - NO SQL FOUND
+--   19. GadgetsOnline/Program.cs                                 - NO SQL FOUND
+--   20. GadgetsOnline/Startup.cs                                 - NO SQL FOUND
+--   21. GadgetsOnline/ViewModel/ShoppingCartViewModel.cs         - NO SQL FOUND
+--   22. GadgetsOnline/ViewModel/ShoppingCartRemoveViewModel.cs   - NO SQL FOUND
+--
+-- CONCLUSION:
+-- ===========================================================================
+-- This application uses Entity Framework 6 with LINQ queries exclusively.
+-- ZERO (0) inline SQL statements were found across all 22 source files.
+-- No SQL statements require extraction, DMS conversion, or equivalency validation.
+--
+-- Database access patterns found (all EF6 LINQ - not raw SQL):
+--   - _gadgetsOnlineEntities.Products.Take(count).ToList()
+--   - _gadgetsOnlineEntities.Categories.ToList()
+--   - _gadgetsOnlineEntities.Products.Where(p => p.Category.Name == category).ToList()
+--   - _gadgetsOnlineEntities.Products.Where(p => p.ProductId == id).FirstOrDefault()
+--   - _gadgetsOnlineEntities.Carts.SingleOrDefault(c => c.CartId == ... && c.ProductId == id)
+--   - _gadgetsOnlineEntities.Carts.Where(cart => cart.CartId == ShoppingCartId)
+--   - _gadgetsOnlineEntities.Carts.Add(cartItem)
+--   - _gadgetsOnlineEntities.Carts.Remove(cartItem)
+--   - _gadgetsOnlineEntities.OrderDetails.Add(orderDetail)
+--   - _gadgetsOnlineEntities.Orders.Add(order)
+--   - _gadgetsOnlineEntities.SaveChanges()
+--   - LINQ query expressions (from cartItems in ... select ... Sum())
+--
+-- No DMS conversion needed. No equivalency validation needed.
+-- ============================================================================
