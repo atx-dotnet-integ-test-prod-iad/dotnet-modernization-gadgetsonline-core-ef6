@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using GadgetsOnline.Models;
 using GadgetsOnline.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,11 +34,11 @@ namespace GadgetsOnline.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddressAndPayment(FormCollection values)
+        public ActionResult AddressAndPayment(IFormCollection values)
         {
             var order = new Order();
             /* Added by CTA: This updated method might require the parameters to be re-organized */
-            TryUpdateModelAsync(order);
+            TryValidateModel(order);
             try
             {
                 order.Username = "Anonymous";
