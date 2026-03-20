@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GadgetsOnline.Models;
@@ -29,7 +29,7 @@ namespace GadgetsOnline.Services
             return this;
         }
 
-        internal int CreateOrder(Order order)
+        public int CreateOrder(Order order)
         {
             decimal orderTotal = 0;
             var cartItems = GetCartItems();
@@ -116,7 +116,7 @@ namespace GadgetsOnline.Services
             return count ?? 0;
         }
 
-        internal int RemoveFromCart(int id)
+        public int RemoveFromCart(int id)
         {
             // Get the cart
             var cartItem = _gadgetsOnlineEntities.Carts.Single(cart => cart.CartId == ShoppingCartId && cart.ProductId == id);
