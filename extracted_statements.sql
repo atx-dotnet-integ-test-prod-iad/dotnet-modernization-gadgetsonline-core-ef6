@@ -1,0 +1,163 @@
+-- ============================================================================
+-- EXTRACTED SQL STATEMENTS CATALOG
+-- Application: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- Generated: 2026-03-21 (Step 1 - Comprehensive SQL Statement Extraction)
+-- DMS Migration Project ARN: arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U
+-- ============================================================================
+--
+-- ANALYSIS RESULT: No raw SQL statements found in the codebase.
+--
+-- This application exclusively uses Entity Framework 6 with LINQ queries
+-- for all database operations. No raw SQL statements, string-constructed SQL,
+-- parameterized SQL, StringBuilder SQL, SqlCommand.CommandText assignments,
+-- ExecuteSqlRaw, FromSqlRaw, or any other raw SQL methods were found.
+--
+-- ============================================================================
+-- FILES SCANNED (17 source files + 3 config files)
+-- ============================================================================
+--
+-- SERVICE LAYER:
+--   [SCANNED] GadgetsOnline/Services/Inventory.cs
+--     - Uses EF6 LINQ: .Take(), .Where(), .ToList(), .FirstOrDefault()
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Services/ShoppingCart.cs
+--     - Uses EF6 LINQ: .SingleOrDefault(), .Where(), .Sum(), .Single(), .ToList()
+--     - Uses EF6 operations: .Add(), .Remove(), .SaveChanges()
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Services/OrderProcessing.cs
+--     - Uses EF6 operations: .Add(), .SaveChanges()
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Services/IInventory.cs
+--     - Interface definition only, no DB code
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Services/IShoppingCart.cs
+--     - Interface definition only, no DB code
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Services/IOrderProcessing.cs
+--     - Interface definition only, no DB code
+--     - No raw SQL statements found
+--
+-- CONTROLLER LAYER:
+--   [SCANNED] GadgetsOnline/Controllers/HomeController.cs
+--     - Calls service methods only, no direct DB access
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Controllers/StoreController.cs
+--     - Calls service methods only, no direct DB access
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Controllers/ShoppingCartController.cs
+--     - Calls service methods only, no direct DB access
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Controllers/CheckoutController.cs
+--     - Calls service methods only, no direct DB access
+--     - No raw SQL statements found
+--
+-- COMPONENT LAYER:
+--   [SCANNED] GadgetsOnline/Components/CategoryMenuViewComponent.cs
+--     - Calls service methods only, no direct DB access
+--     - No raw SQL statements found
+--
+-- MODEL LAYER:
+--   [SCANNED] GadgetsOnline/Models/GadgetsOnlineEntities.cs
+--     - Contains EF6 DbContext with Fluent API configuration
+--     - DbConfiguration for Npgsql (NpgsqlServices, NpgsqlConnectionFactory)
+--     - Entity-to-table mappings using lowercase names and gadgetsonline_dbo schema
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/GadgetsOnlineInitializer.cs
+--     - Contains EF6 seed data using entity objects
+--     - Uses EF operations: .Add(), .SaveChanges()
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/Cart.cs
+--     - Entity model class with [Table] and [Column] attributes
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/Category.cs
+--     - Entity model class with [Table] and [Column] attributes
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/Product.cs
+--     - Entity model class with [Table] and [Column] attributes
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/Order.cs
+--     - Entity model class with [Table] and [Column] attributes
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Models/OrderDetail.cs
+--     - Entity model class with [Table] and [Column] attributes
+--     - No raw SQL statements found
+--
+-- APPLICATION STARTUP:
+--   [SCANNED] GadgetsOnline/Startup.cs
+--     - Contains EF6 configuration and DI registration
+--     - No raw SQL statements found
+--
+--   [SCANNED] GadgetsOnline/Program.cs
+--     - Contains host builder configuration
+--     - No raw SQL statements found
+--
+-- CONFIGURATION FILES:
+--   [SCANNED] GadgetsOnline/GadgetsOnline.csproj
+--     - No Microsoft.Data.SqlClient or System.Data.SqlClient package references
+--     - Contains Npgsql 4.1.3 and EntityFramework6.Npgsql 6.4.3
+--
+--   [SCANNED] GadgetsOnline/appsettings.json
+--     - Connection string uses PostgreSQL format (Host=, Database=, Username=, Password=)
+--     - No SQL Server connection parameters found
+--
+--   [SCANNED] GadgetsOnline/app.config
+--     - Npgsql provider configured
+--     - NpgsqlConnectionFactory configured
+--     - NpgsqlFactory registered
+--     - No SqlClient provider references
+--
+-- ============================================================================
+-- GREP SCAN PATTERNS USED
+-- ============================================================================
+--
+-- Pattern 1: Raw SQL keywords in string literals ("SELECT, "INSERT, "UPDATE, "DELETE, "CREATE TABLE, "ALTER, "DROP, "EXEC)
+--   Result: 0 matches (no SQL string literals found)
+--
+-- Pattern 2: SQL Server ADO.NET classes (SqlCommand, SqlConnection, SqlDataReader, SqlParameter, SqlTransaction, SqlDataAdapter)
+--   Result: 0 matches
+--
+-- Pattern 3: Raw SQL execution methods (CommandText, ExecuteSql, FromSql, RawSql, SqlQuery)
+--   Result: 0 matches
+--
+-- Pattern 4: ADO.NET execution methods (ExecuteNonQuery, ExecuteReader, ExecuteScalar)
+--   Result: 0 matches
+--
+-- Pattern 5: StringBuilder SQL construction patterns
+--   Result: 0 matches
+--
+-- Pattern 6: SQL Server client imports (Microsoft.Data.SqlClient, System.Data.SqlClient)
+--   Result: 0 matches
+--
+-- Pattern 7: String concatenation SQL patterns
+--   Result: 0 matches
+--
+-- Pattern 8: SQL Server packages in .csproj (Microsoft.Data.SqlClient, System.Data.SqlClient)
+--   Result: 0 matches
+--
+-- ============================================================================
+-- SUMMARY
+-- ============================================================================
+--
+-- SQL Server ADO.NET class references found: 0
+-- SQL Server import statements found: 0
+-- SQL Server package references found: 0
+-- Raw SQL string patterns found: 0
+-- SQL Server connection string patterns in source: 0
+--
+-- Total SQL statements extracted: 0
+-- ============================================================================

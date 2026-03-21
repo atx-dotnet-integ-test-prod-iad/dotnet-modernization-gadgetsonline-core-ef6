@@ -1,0 +1,47 @@
+-- ============================================================================
+-- CONVERTED SQL STATEMENTS CATALOG
+-- Application: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- Generated: 2026-03-21 (Step 1 - DMS Conversion)
+-- DMS Migration Project ARN: arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U
+-- DMS Schema: dbo
+-- ============================================================================
+--
+-- CONVERSION RESULT: No SQL statements to convert.
+--
+-- Step 1 confirmed that this application exclusively uses Entity Framework 6
+-- with LINQ queries for all database operations. No raw SQL statements were
+-- found in the codebase during the comprehensive extraction phase.
+-- Therefore, no statements required conversion through the DMS MCP tool,
+-- and no statement pairs required equivalency validation.
+--
+-- The Entity Framework ORM handles SQL generation internally and the
+-- migration from SQL Server to PostgreSQL is handled by:
+--   1. Replacing the EF SQL Server provider with Npgsql provider
+--      (EntityFramework6.Npgsql 6.4.3, Npgsql 4.1.3)
+--   2. Updating the DbConfiguration to use NpgsqlServices and NpgsqlConnectionFactory
+--   3. Updating connection strings to PostgreSQL format (Host=, Database=, Username=, Password=)
+--   4. Configuring EF6 entity mappings with PostgreSQL-compatible schema names
+--      (lowercase table/column names, gadgetsonline_dbo schema)
+--   5. Adding DateTime UTC fix (FixDateTimeKinds) for PostgreSQL compatibility
+--   6. Configuring app.config with Npgsql provider factory
+--
+-- ============================================================================
+-- CONVERSION STATISTICS
+-- ============================================================================
+--
+-- Total SQL statements extracted (from Step 1): 0
+-- Total SQL statements converted via DMS MCP tool: 0
+-- Total manual conversions (DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA): 0
+-- Total SQL Equivalency validations performed: 0
+-- Total statements validated as EQUIVALENT: 0
+-- Total statements validated as NOT_EQUIVALENT: 0
+-- Total statements with equivalency ERROR: 0
+--
+-- ============================================================================
+-- CONVERTED STATEMENTS
+-- ============================================================================
+--
+-- (No statements to list - 0 raw SQL statements found in codebase)
+--
+-- ============================================================================
