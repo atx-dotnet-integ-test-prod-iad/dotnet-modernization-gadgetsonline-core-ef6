@@ -1,0 +1,42 @@
+-- ============================================================
+-- Extracted SQL Statements Catalog
+-- Project: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- ============================================================
+--
+-- FINDING: No explicit SQL statements were found in the codebase.
+--
+-- The application uses Entity Framework 6 with LINQ-to-Entities for
+-- all data access operations. The following files were thoroughly
+-- scanned for SQL statements:
+--
+-- Services:
+--   - GadgetsOnline/Services/Inventory.cs (LINQ-to-Entities only)
+--   - GadgetsOnline/Services/ShoppingCart.cs (LINQ-to-Entities only)
+--   - GadgetsOnline/Services/OrderProcessing.cs (LINQ-to-Entities only)
+--
+-- Models:
+--   - GadgetsOnline/Models/GadgetsOnlineEntities.cs (EF6 DbContext, no raw SQL)
+--   - GadgetsOnline/Models/GadgetsOnlineInitializer.cs (EF6 seed data, no raw SQL)
+--
+-- Controllers:
+--   - GadgetsOnline/Controllers/CheckoutController.cs (no SQL)
+--   - GadgetsOnline/Controllers/HomeController.cs (no SQL)
+--   - GadgetsOnline/Controllers/ShoppingCartController.cs (no SQL)
+--   - GadgetsOnline/Controllers/StoreController.cs (no SQL)
+--
+-- Components:
+--   - GadgetsOnline/Components/CategoryMenuViewComponent.cs (no SQL)
+--
+-- Search patterns used:
+--   - Inline SQL strings (SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, EXEC)
+--   - String concatenation SQL patterns
+--   - StringBuilder-constructed SQL
+--   - SqlCommand, SqlConnection, SqlDataReader, SqlParameter
+--   - ExecuteSql, FromSqlRaw, FromSql, Database.Execute
+--   - CommandText, CommandType, StoredProcedure
+--
+-- Result: Zero (0) explicit SQL statements found.
+-- All database operations are handled through EF6 LINQ-to-Entities,
+-- which generates SQL at runtime via the EntityFramework6.Npgsql provider.
+-- ============================================================

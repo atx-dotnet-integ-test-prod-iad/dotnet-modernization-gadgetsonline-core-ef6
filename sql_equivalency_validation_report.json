@@ -1,0 +1,31 @@
+{
+  "project": "GadgetsOnline",
+  "migration": "Microsoft SQL Server to PostgreSQL",
+  "summary": "The application uses Entity Framework 6 with LINQ-to-Entities exclusively for all database operations. No explicit SQL statements (inline, concatenated, parameterized, StringBuilder-constructed, or stored procedure calls) were found in any source file. All SQL generation is handled at runtime by the EntityFramework6.Npgsql provider.",
+  "files_scanned": [
+    "GadgetsOnline/Services/Inventory.cs",
+    "GadgetsOnline/Services/ShoppingCart.cs",
+    "GadgetsOnline/Services/OrderProcessing.cs",
+    "GadgetsOnline/Models/GadgetsOnlineEntities.cs",
+    "GadgetsOnline/Models/GadgetsOnlineInitializer.cs",
+    "GadgetsOnline/Controllers/CheckoutController.cs",
+    "GadgetsOnline/Controllers/HomeController.cs",
+    "GadgetsOnline/Controllers/ShoppingCartController.cs",
+    "GadgetsOnline/Controllers/StoreController.cs",
+    "GadgetsOnline/Components/CategoryMenuViewComponent.cs"
+  ],
+  "search_patterns_used": [
+    "Inline SQL strings (SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER, EXEC)",
+    "String concatenation SQL patterns",
+    "StringBuilder-constructed SQL",
+    "SqlCommand, SqlConnection, SqlDataReader, SqlParameter",
+    "ExecuteSql, FromSqlRaw, FromSql, Database.Execute",
+    "CommandText, CommandType, StoredProcedure",
+    "RawSql patterns"
+  ],
+  "number_of_statements_processed": 0,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 0,
+  "statement_details": []
+}

@@ -1,0 +1,23 @@
+-- ============================================================
+-- Converted SQL Statements Catalog
+-- Project: GadgetsOnline
+-- Migration: Microsoft SQL Server to PostgreSQL
+-- ============================================================
+--
+-- FINDING: No SQL statements required conversion.
+--
+-- The application uses Entity Framework 6 with LINQ-to-Entities
+-- exclusively for all data access. No explicit SQL statements
+-- (inline, concatenated, parameterized, or dynamically constructed)
+-- were found in the codebase.
+--
+-- Since no explicit SQL statements exist:
+--   - No statements were passed to the DMS MCP conversion tool
+--   - No manual SQL conversions were necessary
+--   - The EF6 Npgsql provider (EntityFramework6.Npgsql 6.4.3)
+--     handles SQL generation for PostgreSQL at runtime
+--
+-- Total statements extracted: 0
+-- Total statements converted via DMS: 0
+-- Total statements manually converted: 0
+-- ============================================================
