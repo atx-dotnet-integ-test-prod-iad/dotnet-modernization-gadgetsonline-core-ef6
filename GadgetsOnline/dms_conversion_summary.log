@@ -1,0 +1,159 @@
+================================================================================
+DMS CONVERSION SUMMARY LOG
+Application: GadgetsOnline
+Migration Project: arn:aws:dms:us-east-1:789616364195:migration-project:73N4TGCKEFESJJWR43O334CC7U
+Region: us-east-1
+Database: GadgetsOnline
+Schema: dbo
+Server: 172.31.82.226
+================================================================================
+DMS Tool Status: ALL 13 STATEMENTS FAILED
+Common Error: Metadata model creation failed: No objects were found according
+to the specified selection rules.
+Fallback: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA applied to all 13
+================================================================================
+
+--- Statement 1 ---
+Source: Services/Inventory.cs - GetBestSellers
+Input:  SELECT TOP(@count) productid, categoryid, name, price, productarturl FROM dbo.Products
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:06:06 - 2026-03-24T13:06:20
+Manual Conversion: SELECT productid, categoryid, name, price, productarturl FROM gadgetsonline_dbo.products LIMIT @count
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Products -> gadgetsonline_dbo.products, TOP(@count) -> LIMIT @count (moved to end)
+
+--- Statement 2 ---
+Source: Services/Inventory.cs - GetAllCategories
+Input:  SELECT categoryid, name, description FROM dbo.Categories
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:06:30 - 2026-03-24T13:06:45
+Manual Conversion: SELECT categoryid, name, description FROM gadgetsonline_dbo.categories
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Categories -> gadgetsonline_dbo.categories
+
+--- Statement 3 ---
+Source: Services/Inventory.cs - GetAllProductsInCategory
+Input:  SELECT p.productid, p.categoryid, p.name, p.price, p.productarturl FROM dbo.Products p INNER JOIN dbo.Categories c ON p.categoryid = c.categoryid WHERE c.name = @category
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:06:53 - 2026-03-24T13:07:08
+Manual Conversion: SELECT p.productid, p.categoryid, p.name, p.price, p.productarturl FROM gadgetsonline_dbo.products p INNER JOIN gadgetsonline_dbo.categories c ON p.categoryid = c.categoryid WHERE c.name = @category
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Products -> gadgetsonline_dbo.products, dbo.Categories -> gadgetsonline_dbo.categories
+
+--- Statement 4 ---
+Source: Services/Inventory.cs - GetProductById
+Input:  SELECT TOP 1 productid, categoryid, name, price, productarturl FROM dbo.Products WHERE productid = @id
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:07:17 - 2026-03-24T13:07:32
+Manual Conversion: SELECT productid, categoryid, name, price, productarturl FROM gadgetsonline_dbo.products WHERE productid = @id LIMIT 1
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Products -> gadgetsonline_dbo.products, TOP 1 -> LIMIT 1 (moved to end)
+
+--- Statement 5 ---
+Source: Services/Inventory.cs - GetProductNameById
+Input:  SELECT TOP 1 name FROM dbo.Products WHERE productid = @id
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:07:40 - 2026-03-24T13:07:55
+Manual Conversion: SELECT name FROM gadgetsonline_dbo.products WHERE productid = @id LIMIT 1
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Products -> gadgetsonline_dbo.products, TOP 1 -> LIMIT 1 (moved to end)
+
+--- Statement 6 ---
+Source: Services/ShoppingCart.cs - AddToCart (lookup)
+Input:  SELECT TOP 1 recordid, cartid, productid, count, datecreated FROM dbo.Carts WHERE cartid = @cartid AND productid = @productid
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:08:04 - 2026-03-24T13:08:18
+Manual Conversion: SELECT recordid, cartid, productid, count, datecreated FROM gadgetsonline_dbo.carts WHERE cartid = @cartid AND productid = @productid LIMIT 1
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts, TOP 1 -> LIMIT 1 (moved to end)
+
+--- Statement 7 ---
+Source: Services/ShoppingCart.cs - AddToCart (insert)
+Input:  INSERT INTO dbo.Carts (cartid, productid, count, datecreated) VALUES (@cartid, @productid, @count, @datecreated)
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:08:27 - 2026-03-24T13:08:42
+Manual Conversion: INSERT INTO gadgetsonline_dbo.carts (cartid, productid, count, datecreated) VALUES (@cartid, @productid, @count, @datecreated)
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts
+
+--- Statement 8 ---
+Source: Services/ShoppingCart.cs - GetCount
+Input:  SELECT SUM(count) FROM dbo.Carts WHERE cartid = @cartid
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:08:50 - 2026-03-24T13:09:05
+Manual Conversion: SELECT SUM(count) FROM gadgetsonline_dbo.carts WHERE cartid = @cartid
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts
+
+--- Statement 9 ---
+Source: Services/ShoppingCart.cs - RemoveFromCart/EmptyCart (delete)
+Input:  DELETE FROM dbo.Carts WHERE recordid = @recordid
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:09:13 - 2026-03-24T13:09:28
+Manual Conversion: DELETE FROM gadgetsonline_dbo.carts WHERE recordid = @recordid
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts
+
+--- Statement 10 ---
+Source: Services/ShoppingCart.cs - GetCartItems/EmptyCart (select)
+Input:  SELECT recordid, cartid, productid, count, datecreated FROM dbo.Carts WHERE cartid = @cartid
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:09:38 - 2026-03-24T13:09:53
+Manual Conversion: SELECT recordid, cartid, productid, count, datecreated FROM gadgetsonline_dbo.carts WHERE cartid = @cartid
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts
+
+--- Statement 11 ---
+Source: Services/ShoppingCart.cs - GetTotal
+Input:  SELECT SUM(c.count * p.price) FROM dbo.Carts c INNER JOIN dbo.Products p ON c.productid = p.productid WHERE c.cartid = @cartid
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:10:03 - 2026-03-24T13:10:17
+Manual Conversion: SELECT SUM(c.count * p.price) FROM gadgetsonline_dbo.carts c INNER JOIN gadgetsonline_dbo.products p ON c.productid = p.productid WHERE c.cartid = @cartid
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Carts -> gadgetsonline_dbo.carts, dbo.Products -> gadgetsonline_dbo.products
+
+--- Statement 12 ---
+Source: Services/ShoppingCart.cs - CreateOrder (insert order detail)
+Input:  INSERT INTO dbo.OrderDetails (productid, orderid, unitprice, quantity) VALUES (@productid, @orderid, @unitprice, @quantity)
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:10:26 - 2026-03-24T13:10:40
+Manual Conversion: INSERT INTO gadgetsonline_dbo.orderdetails (productid, orderid, unitprice, quantity) VALUES (@productid, @orderid, @unitprice, @quantity)
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.OrderDetails -> gadgetsonline_dbo.orderdetails
+
+--- Statement 13 ---
+Source: Services/OrderProcessing.cs - ProcessOrder (insert order)
+Input:  INSERT INTO dbo.Orders (orderdate, username, firstname, lastname, address, city, state, postalcode, country, phone, email, total) VALUES (@orderdate, @username, @firstname, @lastname, @address, @city, @state, @postalcode, @country, @phone, @email, @total)
+DMS Status: ERROR
+DMS Error: Metadata model creation failed: {'error': "Metadata model creation failed: {'default_error_details': {'message': 'No objects were found according to the specified selection rules. Please review your selection rules and try again.'}}"}
+DMS Timestamp: 2026-03-24T13:10:50 - 2026-03-24T13:11:04
+Manual Conversion: INSERT INTO gadgetsonline_dbo.orders (orderdate, username, firstname, lastname, address, city, state, postalcode, country, phone, email, total) VALUES (@orderdate, @username, @firstname, @lastname, @address, @city, @state, @postalcode, @country, @phone, @email, @total)
+Conversion Reason: DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA
+Changes Applied: dbo.Orders -> gadgetsonline_dbo.orders
+
+================================================================================
+SUMMARY
+================================================================================
+Total Statements Attempted: 13
+DMS Successful Conversions: 0
+DMS Failed Conversions: 13
+Manual Conversions Applied: 13
+Common DMS Error: Metadata model creation failed - No objects found according to selection rules
+Manual Conversion Rules Applied:
+  - Schema mapping: dbo.* -> gadgetsonline_dbo.* (all lowercase)
+  - TOP N/TOP(@N) -> LIMIT N (moved to end of query)
+  - All table/column names converted to lowercase
+  - Parameter syntax (@param) preserved (compatible with both)
+================================================================================
