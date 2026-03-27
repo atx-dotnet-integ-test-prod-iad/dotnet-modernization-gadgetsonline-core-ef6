@@ -1,0 +1,48 @@
+{
+  "number_of_statements_processed": 5,
+  "number_of_statements_equivalent": 0,
+  "number_of_statements_non_equivalent": 0,
+  "number_of_statements_with_equivalency_error": 5,
+  "statement_details": [
+    {
+      "original_statement": "CREATE TABLE dbo.Products (\n    ProductId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,\n    CategoryId INT NOT NULL,\n    Name NVARCHAR(255) NOT NULL,\n    Price DECIMAL(18,2) NOT NULL,\n    ProductArtUrl NVARCHAR(1024) NULL,\n    CONSTRAINT FK_Products_Categories FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)\n);",
+      "converted_statement": "CREATE TABLE gadgetsonline_dbo.products (\n    productid SERIAL PRIMARY KEY,\n    categoryid INTEGER NOT NULL,\n    name VARCHAR(255) NOT NULL,\n    price NUMERIC(18,2) NOT NULL,\n    productarturl VARCHAR(1024) NULL,\n    CONSTRAINT fk_products_categories FOREIGN KEY (categoryid) REFERENCES gadgetsonline_dbo.categories(categoryid)\n);",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-27T04:01:34.878485\"}",
+      "dms_failure_reason": "Metadata model creation failed: No objects were found according to the specified selection rules. Please review your selection rules and try again."
+    },
+    {
+      "original_statement": "CREATE TABLE dbo.Categories (\n    CategoryId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,\n    Name NVARCHAR(MAX) NULL,\n    Description NVARCHAR(MAX) NULL\n);",
+      "converted_statement": "CREATE TABLE gadgetsonline_dbo.categories (\n    categoryid SERIAL PRIMARY KEY,\n    name TEXT NULL,\n    description TEXT NULL\n);",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-27T04:01:46.914092\"}",
+      "dms_failure_reason": "Metadata model creation failed: No objects were found according to the specified selection rules. Please review your selection rules and try again."
+    },
+    {
+      "original_statement": "CREATE TABLE dbo.Carts (\n    RecordId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,\n    CartId NVARCHAR(MAX) NULL,\n    ProductId INT NOT NULL,\n    Count INT NOT NULL,\n    DateCreated DATETIME NOT NULL,\n    CONSTRAINT FK_Carts_Products FOREIGN KEY (ProductId) REFERENCES dbo.Products(ProductId)\n);",
+      "converted_statement": "CREATE TABLE gadgetsonline_dbo.carts (\n    recordid SERIAL PRIMARY KEY,\n    cartid TEXT NULL,\n    productid INTEGER NOT NULL,\n    count INTEGER NOT NULL,\n    datecreated TIMESTAMP NOT NULL,\n    CONSTRAINT fk_carts_products FOREIGN KEY (productid) REFERENCES gadgetsonline_dbo.products(productid)\n);",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-27T04:01:59.222948\"}",
+      "dms_failure_reason": "Metadata model creation failed: No objects were found according to the specified selection rules. Please review your selection rules and try again."
+    },
+    {
+      "original_statement": "CREATE TABLE dbo.Orders (\n    OrderId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,\n    OrderDate DATETIME NOT NULL,\n    Username NVARCHAR(MAX) NULL,\n    FirstName NVARCHAR(160) NOT NULL,\n    LastName NVARCHAR(160) NOT NULL,\n    Address NVARCHAR(70) NOT NULL,\n    City NVARCHAR(40) NOT NULL,\n    State NVARCHAR(40) NOT NULL,\n    PostalCode NVARCHAR(10) NOT NULL,\n    Country NVARCHAR(40) NOT NULL,\n    Phone NVARCHAR(24) NOT NULL,\n    Email NVARCHAR(MAX) NOT NULL,\n    Total DECIMAL(18,2) NOT NULL\n);",
+      "converted_statement": "CREATE TABLE gadgetsonline_dbo.orders (\n    orderid SERIAL PRIMARY KEY,\n    orderdate TIMESTAMP NOT NULL,\n    username TEXT NULL,\n    firstname VARCHAR(160) NOT NULL,\n    lastname VARCHAR(160) NOT NULL,\n    address VARCHAR(70) NOT NULL,\n    city VARCHAR(40) NOT NULL,\n    state VARCHAR(40) NOT NULL,\n    postalcode VARCHAR(10) NOT NULL,\n    country VARCHAR(40) NOT NULL,\n    phone VARCHAR(24) NOT NULL,\n    email TEXT NOT NULL,\n    total NUMERIC(18,2) NOT NULL\n);",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-27T04:02:14.940194\"}",
+      "dms_failure_reason": "Metadata model creation failed: No objects were found according to the specified selection rules. Please review your selection rules and try again."
+    },
+    {
+      "original_statement": "CREATE TABLE dbo.OrderDetails (\n    OrderDetailId INT IDENTITY(1,1) NOT NULL PRIMARY KEY,\n    OrderId INT NOT NULL,\n    ProductId INT NOT NULL,\n    Quantity INT NOT NULL,\n    UnitPrice DECIMAL(18,2) NOT NULL,\n    CONSTRAINT FK_OrderDetails_Orders FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId),\n    CONSTRAINT FK_OrderDetails_Products FOREIGN KEY (ProductId) REFERENCES dbo.Products(ProductId)\n);",
+      "converted_statement": "CREATE TABLE gadgetsonline_dbo.orderdetails (\n    orderdetailid SERIAL PRIMARY KEY,\n    orderid INTEGER NOT NULL,\n    productid INTEGER NOT NULL,\n    quantity INTEGER NOT NULL,\n    unitprice NUMERIC(18,2) NOT NULL,\n    CONSTRAINT fk_orderdetails_orders FOREIGN KEY (orderid) REFERENCES gadgetsonline_dbo.orders(orderid),\n    CONSTRAINT fk_orderdetails_products FOREIGN KEY (productid) REFERENCES gadgetsonline_dbo.products(productid)\n);",
+      "conversion_method": "DMS_FAILURE_MANUAL_CONVERSION_WITH_LOWERCASE_SCHEMA",
+      "equivalency_status": "ERROR",
+      "equivalency_tool_output": "{\"equivalence_status\": \"ERROR\", \"error\": \"'uniqueID'\", \"timestamp\": \"2026-03-27T04:02:30.587712\"}",
+      "dms_failure_reason": "Metadata model creation failed: No objects were found according to the specified selection rules. Please review your selection rules and try again."
+    }
+  ]
+}
