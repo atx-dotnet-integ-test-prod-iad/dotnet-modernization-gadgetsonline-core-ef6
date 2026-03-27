@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 using GadgetsOnline.Models;
 using GadgetsOnline.Services;
 using Microsoft.AspNetCore.Mvc;
