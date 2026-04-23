@@ -4,10 +4,11 @@ using GadgetsOnline.Models;
 using GadgetsOnline.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Entity;
+
 
 namespace GadgetsOnline
 {
@@ -33,10 +34,10 @@ namespace GadgetsOnline
             });
 
             services.AddControllersWithViews();
-            services.AddScoped<GadgetsOnlineEntities>(provider =>
-                new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))));
+            services.AddDbContext<GadgetsOnlineEntities>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))));
 
-            Database.SetInitializer(new GadgetsOnlineInitializer());
+
 
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IShoppingCart, ShoppingCart>();
@@ -47,12 +48,7 @@ namespace GadgetsOnline
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Initialize EF6 database on startup
-            using (var context = new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))))
-            {
-                // This will trigger the initializer if needed
-                context.Database.Initialize(force: false);
-            }
+
 
             if (env.IsDevelopment())
             {
@@ -90,4 +86,3 @@ namespace GadgetsOnline
     }
 
 }
-
