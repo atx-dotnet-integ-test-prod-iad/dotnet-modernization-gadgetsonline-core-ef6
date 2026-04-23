@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Entity;
+
 
 namespace GadgetsOnline
 {
@@ -36,7 +36,7 @@ namespace GadgetsOnline
             services.AddScoped<GadgetsOnlineEntities>(provider =>
                 new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))));
 
-            Database.SetInitializer(new GadgetsOnlineInitializer());
+
 
             services.AddScoped<IInventory, Inventory>();
             services.AddScoped<IShoppingCart, ShoppingCart>();
@@ -47,11 +47,10 @@ namespace GadgetsOnline
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // Initialize EF6 database on startup
-            using (var context = new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))))
+            // Initialize EF Core database on startup
+using (var context = new GadgetsOnlineEntities(Configuration.GetConnectionString(nameof(GadgetsOnlineEntities))))
             {
-                // This will trigger the initializer if needed
-                context.Database.Initialize(force: false);
+                context.Database.EnsureCreated();
             }
 
             if (env.IsDevelopment())
@@ -90,4 +89,3 @@ namespace GadgetsOnline
     }
 
 }
-
