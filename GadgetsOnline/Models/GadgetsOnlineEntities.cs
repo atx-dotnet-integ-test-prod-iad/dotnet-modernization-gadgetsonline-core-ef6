@@ -1,9 +1,12 @@
 using GadgetsOnline.Models;
+using Npgsql;
+
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace GadgetsOnline.Models
 {
+    [DbConfigurationType(typeof(GadgetsOnlineEntitiesPostgreSqlConfiguration))]
     public class GadgetsOnlineEntities : DbContext
     {
         // Default constructor using connection string name from config
@@ -29,30 +32,94 @@ namespace GadgetsOnline.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Configure relationships
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Products)
+            // -------------------------------------------------------
+            // Table and column mappings for PostgreSQL (gadgetsonline_dbo schema)
+            // -------------------------------------------------------
+
+            // Product
+            var product = modelBuilder.Entity<Product>();
+            product.ToTable("products", "gadgetsonline_dbo");
+            product.Property(e => e.ProductId).HasColumnName("productid");
+            product.Property(e => e.CategoryId).HasColumnName("categoryid");
+            product.Property(e => e.Name).HasColumnName("name");
+            product.Property(e => e.Price).HasColumnName("price");
+            product.Property(e => e.ProductArtUrl).HasColumnName("productarturl");
+
+            // Category
+            var category = modelBuilder.Entity<Category>();
+            category.ToTable("categories", "gadgetsonline_dbo");
+            category.Property(e => e.CategoryId).HasColumnName("categoryid");
+            category.Property(e => e.Name).HasColumnName("name");
+            category.Property(e => e.Description).HasColumnName("description");
+
+            // Relationships
+            category.HasMany(c => c.Products)
                 .WithRequired(p => p.Category)
                 .HasForeignKey(p => p.CategoryId);
 
-            modelBuilder.Entity<Cart>()
-                .HasRequired(c => c.Product)
+            // Cart
+            var cart = modelBuilder.Entity<Cart>();
+            cart.ToTable("carts", "gadgetsonline_dbo");
+            cart.Property(e => e.RecordId).HasColumnName("recordid");
+            cart.Property(e => e.CartId).HasColumnName("cartid");
+            cart.Property(e => e.ProductId).HasColumnName("productid");
+            cart.Property(e => e.Count).HasColumnName("count");
+            cart.Property(e => e.DateCreated).HasColumnName("datecreated");
+
+            // Relationships
+            cart.HasRequired(c => c.Product)
                 .WithMany()
                 .HasForeignKey(c => c.ProductId);
 
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.OrderDetails)
+            // Order
+            var order = modelBuilder.Entity<Order>();
+            order.ToTable("orders", "gadgetsonline_dbo");
+            order.Property(e => e.OrderId).HasColumnName("orderid");
+            order.Property(e => e.OrderDate).HasColumnName("orderdate");
+            order.Property(e => e.Username).HasColumnName("username");
+            order.Property(e => e.FirstName).HasColumnName("firstname");
+            order.Property(e => e.LastName).HasColumnName("lastname");
+            order.Property(e => e.Address).HasColumnName("address");
+            order.Property(e => e.City).HasColumnName("city");
+            order.Property(e => e.State).HasColumnName("state");
+            order.Property(e => e.PostalCode).HasColumnName("postalcode");
+            order.Property(e => e.Country).HasColumnName("country");
+            order.Property(e => e.Phone).HasColumnName("phone");
+            order.Property(e => e.Email).HasColumnName("email");
+            order.Property(e => e.Total).HasColumnName("total");
+
+            // Relationships
+            order.HasMany(o => o.OrderDetails)
                 .WithRequired(od => od.Order)
                 .HasForeignKey(od => od.OrderId);
 
-            modelBuilder.Entity<OrderDetail>()
-                .HasRequired(od => od.Product)
+            // OrderDetail
+            var orderDetail = modelBuilder.Entity<OrderDetail>();
+            orderDetail.ToTable("orderdetails", "gadgetsonline_dbo");
+            orderDetail.Property(e => e.OrderDetailId).HasColumnName("orderdetailid");
+            orderDetail.Property(e => e.OrderId).HasColumnName("orderid");
+            orderDetail.Property(e => e.ProductId).HasColumnName("productid");
+            orderDetail.Property(e => e.Quantity).HasColumnName("quantity");
+            orderDetail.Property(e => e.UnitPrice).HasColumnName("unitprice");
+
+            // Relationships
+            orderDetail.HasRequired(od => od.Product)
                 .WithMany()
                 .HasForeignKey(od => od.ProductId);
         }
-
     }
 
-
+    /// <summary>
+    /// EF6 DbConfiguration class that registers the Npgsql provider
+    /// for PostgreSQL. The [DbConfigurationType] attribute on
+    /// GadgetsOnlineEntities ensures EF6 picks this up automatically.
+    /// </summary>
+    public class GadgetsOnlineEntitiesPostgreSqlConfiguration : DbConfiguration
+    {
+        public GadgetsOnlineEntitiesPostgreSqlConfiguration()
+        {
+            SetProviderServices("Npgsql", NpgsqlServices.Instance);
+            SetDefaultConnectionFactory(new NpgsqlConnectionFactory());
+        }
+    }
 }
-
