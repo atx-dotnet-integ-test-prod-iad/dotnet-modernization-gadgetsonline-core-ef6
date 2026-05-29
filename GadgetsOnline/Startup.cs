@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using GadgetsOnline.Models;
 using GadgetsOnline.Services;
@@ -90,4 +90,3 @@ namespace GadgetsOnline
     }
 
 }
-
